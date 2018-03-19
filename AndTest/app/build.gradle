@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.abu.andtest"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            moduleName "JNISample"
+            abiFilters("arm64-v8a")
+            abiFilters("armeabi-v7a")
+            abiFilters("x86")
+            ldLibs("android")
+            ldLibs("log")
+
+//            cFlags "-DANDROID_NDK -D_RELEASE" //这个对应的是生成模式
+//            ldLibs "m", "log", "jnigraphics" //这个对应 LOCAL_LDLIBS 但是需要去掉前面的 “l”
+//            abiFilters "all" //这个是对应的 APP_ABI
+//            stl "stlport_shared" //这个对应的是 APP_STL
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = ['src/main/jni/']
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
