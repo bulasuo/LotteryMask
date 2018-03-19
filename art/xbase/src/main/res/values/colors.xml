@@ -2,8 +2,8 @@
 <resources>
     <color name="province_line_border">#C7C7C7</color>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#26B69D</color>
-    <color name="colorAccent">#26B69D</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
     <color name="white_tab">#F8F0F0</color>
     <color name="yellow_btn">#FA800A</color>
     <color name="white_translate">#209f9f9f</color>
@@ -18,6 +18,7 @@
     <color name="line_gray_2">#229f9f9f</color>
     <color name="text_gray">#ee9f9f9f</color>
     <color name="green_app">#26B69D</color>
+    <color name="blue_app">#26B69D</color>
     <color name="green_light">#f3f8ef</color>
     <color name="blue_text_l">#3F51B5</color>
     <color name="blue_text_d">#cc3F51B5</color>
