@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/mar_40"
+    android:paddingLeft="@dimen/mar_40"
+    android:paddingEnd="@dimen/mar_20"
+    android:paddingRight="@dimen/mar_20"
+    android:paddingTop="@dimen/mar_10"
+    android:paddingBottom="@dimen/mar_10"
+    tools:ignore="RtlSymmetry">
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:layout_width="46dp"
+        android:layout_height="46dp"/>
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/waiting_tip"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:paddingStart="@dimen/mar_25"
+        android:paddingLeft="@dimen/mar_25"
+        android:textColor="@color/black_text"
+        android:textSize="16sp" />
+</LinearLayout>

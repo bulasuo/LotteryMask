@@ -1,0 +1,53 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="tab_mar_top_bottom">2dp</dimen>
+    <dimen name="action_bar_height">48dp</dimen>
+    <dimen name="action_bar_button_width">60dp</dimen>
+    <dimen name="page_padding_left">16dp</dimen>
+    <dimen name="page_padding_right">10dp</dimen>
+    <dimen name="view_padding">10dp</dimen>
+    <dimen name="button_padding_top_bottom">15dp</dimen>
+    <dimen name="button_padding_top_bottom_16">16dp</dimen>
+    <dimen name="button_padding_top_bottom_12">12dp</dimen>
+    <dimen name="button_padding_top_bottom_10">10dp</dimen>
+    <dimen name="button_padding_top_bottom_6">6dp</dimen>
+    <dimen name="button_padding_top_bottom_8">8dp</dimen>
+    <dimen name="marage_top_end">20dp</dimen>
+    <dimen name="ic_edit">25dp</dimen>
+
+    <dimen name="mar_1">1dp</dimen>
+    <dimen name="mar_2">2dp</dimen>
+    <dimen name="mar_3">3dp</dimen>
+    <dimen name="mar_4">4dp</dimen>
+    <dimen name="mar_5">5dp</dimen>
+    <dimen name="mar_6">6dp</dimen>
+    <dimen name="mar_7">7dp</dimen>
+    <dimen name="mar_8">8dp</dimen>
+    <dimen name="mar_10">10dp</dimen>
+    <dimen name="mar_12">12dp</dimen>
+    <dimen name="mar_14">14dp</dimen>
+    <dimen name="mar_16">16dp</dimen>
+    <dimen name="mar_17">17dp</dimen>
+    <dimen name="mar_20">20dp</dimen>
+    <dimen name="mar_25">25dp</dimen>
+    <dimen name="mar_30">30dp</dimen>
+    <dimen name="mar_40">40dp</dimen>
+    <dimen name="mar_46">46dp</dimen>
+    <dimen name="mar_60">60dp</dimen>
+    <dimen name="mar_80">80dp</dimen>
+    <dimen name="ic_selected_14">14dp</dimen>
+    <dimen name="ic_default">18dp</dimen>
+    <dimen name="mar_20dd">20dp</dimen>
+
+    <dimen name="item_title">16sp</dimen>
+    <dimen name="text_title">16sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_normal_reduce2">12sp</dimen>
+    <dimen name="text_normal_reduce4">10sp</dimen>
+    <dimen name="text_ddd">12sp</dimen>
+
+
+</resources>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>身份验证</title>
+		
+	</head>
+
+	<body>
+		
+		<div class="fixBottom bgf fh1 pb20">
+			<div class="wx-btn wx-btnh"  id="div1" onclick="submitForm();">确认</div>
+		</div>
+		<form name='mainForm' id="mainForm" action="idenVerifyRedirect" method="post">
+			<input id="merchantNo" name="merchantNo" type="hidden"  />
+			<input id="userId" name="userId" type="hidden"  />
+			<input id="mobile"  name="mobile" type="hidden"  />
+		</form>
+		
+		<div class="wx-content">		
+			<div class="wx-uploadimg-wrap uploadID">
+				<form name='myForm' action="" method="post">
+				<input type="file" id="iden" name="iden" accept="image/*;" capture="camera" style="display:none" />
+					<ul class="img-list">
+						<li class="chooseImg" >
+							<div class="img-wrap rightface" id="right">						
+								<i>+</i>
+								<span>上传身份证正面</span>
+							</div>
+							<!--<span class="btext">身份证正面照</span>-->
+						</li>
+						<li class="chooseImg">
+							<div class="img-wrap backface" id="back">
+								<i>+</i>
+								<span>上传身份证反面</span>
+							</div>
+							<!--<span class="btext">身份证背面照</span>-->
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+		
+	
+		<script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js" type="text/javascript"></script>
+	
+		<script>
+		
+  
+		
+		function submitForm(){
+			if(!rightphoto){
+				alert("请上传身份证正面照");
+				return false;
+			}
+			if(!backphoto){
+				alert("请上传身份证反面照");
+				return false;
+			}
+			
+			$("#div1").hide();
+			$("#div2").show();
+			$('.wx-tips-noAlert').show();			
+			var files = new Array();
+			files.push({idenFace: "101", userId: $("#userId").val(), photo: rightphoto});
+			files.push({idenFace: "102", userId: $("#userId").val(), photo: backphoto});
+			var filesJson = JSON.stringify(files);
+			console.log(backphoto);
+			 $.ajax({
+				url : "uploadIdentity",
+				type : "post",
+				dataType : "json",
+				contentType : 'application/json;charset=utf-8', //设置请求头信息
+				data : filesJson,
+				success : function(data, textStatus) {	
+					console.log(data);
+					$('.wx-tips-noAlert').hide(); 	
+					$("#div1").show();
+					$("#div2").hide();
+					if (data.isSuccess=="true"){
+						 alert('上传成功');
+						 setTimeout(function() {
+							 $('#mainForm').submit();
+							}, 1000)
+															
+					}else {
+						alert(data.errorMessage);						
+					}				 
+				},
+				error : function(XMLHttpRequest, textStatus,
+						errorThrown) {
+					$('.wx-tips-noAlert').hide();
+					$("#div1").show();
+					$("#div2").hide();
+					alert("系统异常");					 
+					return false;
+				}
+			}); 
+			
+		}
+
+				
+	$(function() {																	
+			$('.wx-back-wrap').on('tap', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$('.wx-back-wrap').hide();
+			})
+			$('div.img-wrap').on('tap', function(e) {			
+				e.preventDefault();
+				isRightFace = $(this).hasClass("rightface")? true:false;
+				$("#iden").click();
+			});
+			
+		 document.getElementById("iden").addEventListener('change',evenFunc, false);
+		})
+	
+	var evenFunc = function() {
+		    var reader = new FileReader();
+		    reader.onload = function (e) {
+				try{
+					compress(this.result);
+				}catch(e){
+					alert('加载图片失败!');
+				}
+		        
+		    };
+			try{
+				reader.readAsDataURL(this.files[0]);
+			}catch(e){
+				alert('读取文件失败!');
+			}
+		   
+		}
+		
+	var compress = function (res) {
+	    var img = new Image(),
+	        maxH = 480;
+	    img.src = res;
+	    img.onload = function () {
+	        var cvs = document.createElement('canvas'),
+	            ctx = cvs.getContext('2d');	
+	        if(img.height > maxH) {
+	            img.width *= maxH / img.height;
+	            img.height = maxH;
+	        }	
+	        cvs.width = img.width;
+	        cvs.height = img.height;	
+	        ctx.clearRect(0, 0, cvs.width, cvs.height);
+	        ctx.drawImage(img, 0, 0, img.width, img.height);	
+	        var dataUrl = cvs.toDataURL('image/jpeg', 1.0);
+	        if(isRightFace){
+	        	rightphoto = dataUrl;
+	        	$("#right").html('<img src="' + dataUrl + '" />');
+	        }else{
+	        	backphoto = dataUrl;
+	        	$("#back").html('<img src="' + dataUrl + '" />');
+	        }
+	    }	   
+    }
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/mar_40"
+    android:paddingLeft="@dimen/mar_40"
+    android:paddingEnd="@dimen/mar_20"
+    android:paddingRight="@dimen/mar_20"
+    android:paddingTop="@dimen/mar_10"
+    android:paddingBottom="@dimen/mar_10"
+    tools:ignore="RtlSymmetry"
+    android:textColor="@color/black_text"
+    android:textSize="16sp">
+
+</TextView>

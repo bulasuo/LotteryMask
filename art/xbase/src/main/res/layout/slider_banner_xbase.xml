@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <in.srain.cube.views.banner.SliderBanner
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/xbase_slider_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:slider_banner_indicator="@+id/slider_banner_indicator_xbase"
+        app:slider_banner_pager="@+id/slider_banner_pager_xbase">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/slider_banner_pager_xbase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <in.srain.cube.views.DotView
+            android:id="@+id/slider_banner_indicator_xbase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="40dp"
+
+            />
+        <!--app:dot_radius="4dp"
+        app:dot_selected_color="0xffffffff"
+        app:dot_unselected_color="0x80ffffff"
+        app:dot_span="8dp"-->
+    </in.srain.cube.views.banner.SliderBanner>
+
+</merge>

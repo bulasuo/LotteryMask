@@ -1,28 +1,103 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    defaultConfig {
-        applicationId "com.bulasuo.art"
-        minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//    useLibrary 'org.apache.http.legacy'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildTypes {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId APP_ID
+        minSdkVersion 17
+        targetSdkVersion 26
+        //每次release一次版本后,版本号要把递增1 作为现在开始的改动版
+        versionCode 2
+        versionName "2.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //release 发布版本配置 同时也是默认配置
+        buildConfigField("String", "_FILE_PROVIDER_SCHEME_TAG",
+                "\"" + APP_ID + ".fileprovider\"")
+        buildConfigField("boolean", "_DEBUG", "false")
+        buildConfigField("boolean", "_RELEASE", "true")
+        resValue "string", "app_name", APP_NAME
+        flavorDimensions "main"
+
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs-txim']  // 自定义so文件目录
+            /*jniLibs.srcDirs += 'src/main/jniLibs-um'  // 自定义so文件目录
+            res.srcDirs += 'src/main/res-um'
+            res.srcDirs += 'src/main/res-zxing'*/
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    signingConfigs {
+        config {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storeFile file(STORE_FILE)
+            storePassword KEYSTORE_PASSWORD
+        }
+        debug {
+        }
         release {
+        }
+    }
+    productFlavors {
+//        _360;huawei;baidu;yingyongbao;
+        _debug {
+            /*applicationId APP_ID + name*/
+            resValue "string", "app_name", name + APP_NAME
+            buildConfigField "boolean", "_DEBUG", "true"
+            buildConfigField "boolean", "_RELEASE", "false"
+        }
+        //yingyongbao {}
+        //_360 {}
+        //huawei {}
+        //baidu {}
+        pro {}
+    }
+
+    buildTypes {
+        debug {
             minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = APP_NAME_EN + "_${variant.productFlavors[0].name}" +
+                    "_v${variant.versionName}_${variant.buildType.name}.apk"
+        }
+    }
+    repositories {
+        flatDir { dirs 'libs' }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation project(':xbase')
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
 }
