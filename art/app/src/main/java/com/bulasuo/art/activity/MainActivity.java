@@ -106,10 +106,13 @@ public class MainActivity extends BaseActivity {
         if (llTabNews.isSelected()) {
             return;
         }
-        XViewUtil.selectChild(llTab, llTabNews);
+        /*XViewUtil.selectChild(llTab, llTabNews);
         barTvTitle.setText("新闻");
         currFragmentTag = NewsFragment.class.getName();
-        showFragment(currFragmentTag);
+        showFragment(currFragmentTag);*/
+
+        AppTitleBarBaseWebViewActivity.launch(this, "http://m.500.com/info/zhishi/zt.shtml"
+        , "新闻");
     }
 
     private long lastLoadUserInfoTime;

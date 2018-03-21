@@ -45,9 +45,9 @@ import java.util.Arrays;
  * @author abu
  *         2017/11/29    10:28
  *         bulasuo@foxmail.com
- *
- * ios::  https://github.com/marcuswestin/WebViewJavascriptBridge
- * android:: https://github.com/lzyzsd/JsBridge
+ *         <p>
+ *         ios::  https://github.com/marcuswestin/WebViewJavascriptBridge
+ *         android:: https://github.com/lzyzsd/JsBridge
  */
 
 public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
@@ -57,28 +57,35 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
     private static final KeyEvent BACK_KEY_EVENT =
             new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
 
-    protected static void launch(Context context, String url, Serializable obj, Class<?> class1){
+    /**
+     * @param context
+     * @param url     加载的url
+     * @param obj     FLAG_OBJ {@link #getObj()}
+     * @param class1
+     */
+    protected static void launch(Context context, String url, Serializable obj, Class<?> class1) {
         context.startActivity(new Intent(context, class1)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(FLAG_OBJ, obj)
-            .putExtra(TAG_URL, url));
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(FLAG_OBJ, obj)
+                .putExtra(TAG_URL, url));
     }
 
     protected static final String TAG_URL = "TAG_URL";
-    private String getUrl(){
+
+    private String getUrl() {
         return getIntent().getStringExtra(TAG_URL);
     }
 
-    private void matchParent(View v){
+    private void matchParent(View v) {
         ViewGroup.LayoutParams params = v.getLayoutParams();
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         v.setLayoutParams(params);
     }
 
-    private void showWaiting(){
-        if(mTextView != null){
-            mTextView.setBackgroundColor(receivedError?0xffffffff:0x00ffffff);
+    private void showWaiting() {
+        if (mTextView != null) {
+            mTextView.setBackgroundColor(receivedError ? 0xffffffff : 0x00ffffff);
             receivedError = false;
             mTextView.setClickable(false);
             mTextView.setText("loading...");
@@ -87,8 +94,8 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
         }
     }
 
-    private void hideTip(){
-        if(mTextView != null && !receivedError){
+    private void hideTip() {
+        if (mTextView != null && !receivedError) {
             mBridgeWebView.setVisibility(View.VISIBLE);
             mTextView.setText(null);
             mTextView.setVisibility(View.GONE);
@@ -97,8 +104,9 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
     }
 
     private boolean receivedError = false;
-    private void showErr(){
-        if(mTextView != null){
+
+    private void showErr() {
+        if (mTextView != null) {
             receivedError = true;
             mTextView.setBackgroundColor(0xffffffff);
             mTextView.setText("网络错误!");
@@ -157,7 +165,7 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
             }
         });
         mBridgeWebView.setWebChromeClient(new CustomWebChromeViewClient());
-        mBridgeWebView.setWebViewClient(new MyBridgeWebViewClient(mBridgeWebView));
+        mBridgeWebView.setWebViewClient(getMyBridgeWebViewClient(mBridgeWebView));
 
         mBridgeWebView.registerHandler("startSHSdk", new BridgeHandler() {
 
@@ -194,11 +202,11 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
 
             @Override
             public void handler(String data, CallBackFunction function) {
-               try{
-                   mBridgeWebView.stopLoading();
-               }catch (Exception e){
-                   e.printStackTrace();
-               }
+                try {
+                    mBridgeWebView.stopLoading();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         mBridgeWebView.registerHandler("onNativeRefresh", new BridgeHandler() {
@@ -208,16 +216,16 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
                 mBridgeWebView.reload();
             }
         });
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             mBridgeWebView.restoreState(savedInstanceState);
-        }else {
+        } else {
             mBridgeWebView.loadUrl(getUrl());
         }
     }
 
     @Override
     protected void onResume() {
-        if(mBridgeWebView != null){
+        if (mBridgeWebView != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 mBridgeWebView.onResume();
             }
@@ -227,7 +235,7 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
 
     @Override
     protected void onPause() {
-        if(mBridgeWebView != null){
+        if (mBridgeWebView != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 mBridgeWebView.onPause();
             }
@@ -238,17 +246,17 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(mBridgeWebView != null){
+        if (mBridgeWebView != null) {
             mBridgeWebView.saveState(outState);
         }
     }
 
     @Override
     protected void onDestroy() {
-        if(mFrameLayout != null) {
+        if (mFrameLayout != null) {
             mFrameLayout.removeAllViews();
         }
-        if (null != mBridgeWebView){
+        if (null != mBridgeWebView) {
             mBridgeWebView.loadUrl("");
             mBridgeWebView.stopLoading();
             mBridgeWebView.removeAllViews();
@@ -272,6 +280,10 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    protected MyBridgeWebViewClient getMyBridgeWebViewClient(BridgeWebView webView) {
+        return new MyBridgeWebViewClient(webView);
+    }
+
     public class MyBridgeWebViewClient extends BridgeWebViewClient {
 
         public MyBridgeWebViewClient(BridgeWebView webView) {
@@ -280,20 +292,20 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
 
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            ToastUtil.showDebug(":::11"+url);
+            ToastUtil.showDebug(":::11" + url);
             return super.shouldInterceptRequest(view, url);
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             /**重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边*/
-            ToastUtil.showDebug(":::22shouldOverrideUrlLoading::"+url);
+            ToastUtil.showDebug(":::22shouldOverrideUrlLoading::" + url);
             return super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override
         public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-            ToastUtil.showDebug("::33"+event.toString());
+            ToastUtil.showDebug("::33" + event.toString());
             return super.shouldOverrideKeyEvent(view, event);
         }
 
@@ -306,9 +318,9 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            ToastUtil.showDebug(":::onReceivedError"+errorCode);
-            if(errorCode == WebViewClient.ERROR_CONNECT || errorCode == WebViewClient.ERROR_TIMEOUT || errorCode ==
-                    WebViewClient.ERROR_HOST_LOOKUP){
+            ToastUtil.showDebug(":::onReceivedError" + errorCode);
+            if (errorCode == WebViewClient.ERROR_CONNECT || errorCode == WebViewClient.ERROR_TIMEOUT || errorCode ==
+                    WebViewClient.ERROR_HOST_LOOKUP) {
                 showErr();
             }
             super.onReceivedError(view, errorCode, description, failingUrl);
@@ -326,6 +338,8 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
             hideTip();
             CookieSyncManager.getInstance().sync();
             super.onPageFinished(view, url);
+            /*String js = "(function() {document.getElementById('uiHead').style.display='none';})()";
+            mBridgeWebView.loadUrl("javascript:"+js);*/
         }
 
     }
@@ -362,7 +376,9 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
             return true;
         }
 
-        /**扩容*/
+        /**
+         * 扩容
+         */
         /*@Override
         public void onReachedMaxAppCacheSize(long requiredStorage, long quota, WebStorage.QuotaUpdater quotaUpdater) {
             quotaUpdater.updateQuota(requiredStorage*2);
@@ -370,14 +386,14 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
 
         // For Android  >= 3.0
         public void openFileChooser(ValueCallback valueCallback, String acceptType) {
-            ToastUtil.showDebug("openFileChooser::"+acceptType);
+            ToastUtil.showDebug("openFileChooser::" + acceptType);
             uploadMessage = valueCallback;
             openImageChooserActivity();
         }
 
         // For Android  >= 4.1
         public void openFileChooser(ValueCallback<Uri> valueCallback, String acceptType, String capture) {
-            ToastUtil.showDebug("openFileChooser::"+acceptType+"_"+capture);
+            ToastUtil.showDebug("openFileChooser::" + acceptType + "_" + capture);
             uploadMessage = valueCallback;
             openImageChooserActivity();
         }
@@ -386,9 +402,9 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
         @Override
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ToastUtil.showDebug("onShowFileChooser::"+ fileChooserParams.getFilenameHint()+"_"
-                        +Arrays.toString(fileChooserParams.getAcceptTypes()));
-            }else {
+                ToastUtil.showDebug("onShowFileChooser::" + fileChooserParams.getFilenameHint() + "_"
+                        + Arrays.toString(fileChooserParams.getAcceptTypes()));
+            } else {
                 ToastUtil.showDebug("onShowFileChooser::");
             }
             uploadMessageAboveL = filePathCallback;
@@ -396,13 +412,14 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
             return true;
         }
     }
-    private  ValueCallback<Uri> uploadMessage;
-    private  ValueCallback<Uri[]> uploadMessageAboveL;
+
+    private ValueCallback<Uri> uploadMessage;
+    private ValueCallback<Uri[]> uploadMessageAboveL;
 
     private void openImageChooserActivity() {
         checkPermission(new String[]{
                 Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE}, new BasePermissionActivity.PermissionListener(){
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, new BasePermissionActivity.PermissionListener() {
 
             @Override
             public void onGranted() {
@@ -422,17 +439,17 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
         });
     }
 
-    private void sendReceiveValue(Uri uri){
-        try{
+    private void sendReceiveValue(Uri uri) {
+        try {
             /** 5.0以上 */
             if (uploadMessageAboveL != null) {
                 uploadMessageAboveL.onReceiveValue(new Uri[]{uri});
-            }else {
-                if(uploadMessage != null){
+            } else {
+                if (uploadMessage != null) {
                     uploadMessage.onReceiveValue(uri);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -447,10 +464,10 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
                 break;
             //裁剪返回
             case XConstant.RequestCode.REQUEST_CAMERA_CROP:
-                if (resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
                     Uri uri = data.getData() == null ? XFileUtil.resultUriTemp : data.getData();
                     sendReceiveValue(uri);
-                }else if (resultCode == 0) {
+                } else if (resultCode == 0) {
                     sendReceiveValue(Uri.EMPTY);
                     XFileUtil.deleteFile(XFileUtil.uriTemp);
                 }

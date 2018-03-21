@@ -29,6 +29,9 @@
         <activity
             android:name=".activity.GZListActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AppTitleBarBaseWebViewActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
