@@ -1,7 +1,18 @@
 package com.bulasuo.art.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import com.abu.xbase.fragment.BaseFragment;
+import com.abu.xbase.retrofit.RetrofitUtil;
 import com.bulasuo.art.R;
+import com.bulasuo.art.bean.BaseResponseBean;
+import com.bulasuo.art.services.AppAPI;
+import com.bulasuo.art.services.LotteryService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * @author abu
@@ -12,6 +23,25 @@ import com.bulasuo.art.R;
 public class LotteryFragment extends BaseFragment {
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.fragment_more;
+        return R.layout.fragment_lottery;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        RetrofitUtil.getService(RetrofitUtil.
+                getGsonRetrofit(AppAPI.HOST_LOTTERY_MAIN_LIST), LotteryService.class)
+                .applyMainList()
+                .enqueue(new Callback<BaseResponseBean>() {
+                    @Override
+                    public void onResponse(Call<BaseResponseBean> call, Response<BaseResponseBean> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponseBean> call, Throwable t) {
+
+                    }
+                });
     }
 }

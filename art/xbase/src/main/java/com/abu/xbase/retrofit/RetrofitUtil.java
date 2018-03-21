@@ -98,32 +98,44 @@ public class RetrofitUtil {
     }
 
     /**
-     * 请使用 {@link #getGsonRetrofit()}
+     * 请使用 {@link #getGsonRetrofit(String)}
      */
     @Deprecated
-    public static Retrofit getDefaultRetrofit() {
+    public static Retrofit getDefaultRetrofit(String host) {
         if(defaultRetrofit == null){
             defaultRetrofit = new Retrofit.Builder()
-                    .baseUrl(HOST)
+                    .baseUrl(host)
                     .client(getDefaultClient())
                     .build();
         }
         return defaultRetrofit;
     }
 
-    public static Retrofit getGsonRetrofit() {
+    /**
+     * 请使用 {@link #getGsonRetrofit()}
+     */
+    @Deprecated
+    public static Retrofit getDefaultRetrofit() {
+        return getDefaultRetrofit(HOST);
+    }
+
+    public static Retrofit getGsonRetrofit(String host) {
         if(gsonRetrofit == null){
             Gson gson = new GsonBuilder()
                     //配置你的Gson 可自定义Gson
                     .setDateFormat("yyyy-MM-dd hh:mm:ss")
                     .create();
             gsonRetrofit = new Retrofit.Builder()
-                    .baseUrl(HOST)
+                    .baseUrl(host)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getDefaultClient())
                     .build();
         }
         return gsonRetrofit;
+    }
+
+    public static Retrofit getGsonRetrofit() {
+        return getGsonRetrofit(HOST);
     }
 
     private static OkHttpClient getDefaultClient(){
@@ -152,6 +164,9 @@ public class RetrofitUtil {
             Request original = chain.request();
             Request request = original.newBuilder()
                     .header("User-Agent", agentStr)
+                    .header("Accept", "*/*")
+                    .header("Accept-Encoding", "gzip,deflate")
+                    .header("Accept-Language", "zh-CN,zh;q=0.9;en;q=0.8")
                     .method(original.method(), original.body())
                     .build();
             Response response = chain.proceed(request);
