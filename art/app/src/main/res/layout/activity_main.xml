@@ -7,13 +7,108 @@
     android:layout_height="match_parent"
     tools:context="com.bulasuo.art.activity.MainActivity">
 
-    <TextView
+    <android.support.constraint.Guideline
+        android:id="@+id/view_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/action_bar_height"/>
+    <include layout="@layout/view_toolbar_xbase"/>
+
+    <LinearLayout
+        android:id="@+id/ll_tab"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:background="@color/white_tab"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/ll_tab_lottery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/selector_img_lottery" />
+            <TextView
+                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal_reduce4"
+                android:textColor="@color/black_text"
+                android:text="开奖"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_tab_news"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/selector_img_news" />
+            <TextView
+                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal_reduce4"
+                android:textColor="@color/black_text"
+                android:text="新闻"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_tab_more"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/selector_img_more" />
+            <TextView
+                android:duplicateParentState="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal_reduce4"
+                android:textColor="@color/black_text"
+                android:text="更多"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/line_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ll_tab" />
+
+    <FrameLayout
+        android:id="@+id/frame_content"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:background="@color/background"
+        app:layout_constraintBottom_toTopOf="@id/ll_tab"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/view_toolbar" />
 
 </android.support.constraint.ConstraintLayout>

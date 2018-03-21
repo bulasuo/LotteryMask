@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_wanfa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mar_80"
+        android:background="@color/white"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="@dimen/page_padding_left"
+        android:paddingStart="@dimen/page_padding_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/mar_30"
+            android:layout_height="@dimen/mar_30"
+            android:scaleType="fitCenter"
+            android:src="@drawable/favorate_small"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_marginStart="@dimen/mar_8"
+            android:layout_height="wrap_content"
+            android:text="玩法收藏"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/item_title" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_bbgx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="@dimen/page_padding_left"
+        android:paddingStart="@dimen/page_padding_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_wanfa">
+
+        <ImageView
+            android:layout_width="@dimen/mar_30"
+            android:layout_height="@dimen/mar_30"
+            android:scaleType="fitCenter"
+            android:src="@drawable/refresh"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_marginStart="@dimen/mar_8"
+            android:layout_height="wrap_content"
+            android:text="版本更新"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/item_title" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_qchc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="@dimen/page_padding_left"
+        android:paddingStart="@dimen/page_padding_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_bbgx">
+
+        <ImageView
+            android:layout_width="@dimen/mar_30"
+            android:layout_height="@dimen/mar_30"
+            android:scaleType="fitCenter"
+            android:src="@drawable/trash"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_marginStart="@dimen/mar_8"
+            android:layout_height="wrap_content"
+            android:text="清除缓存"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/item_title" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_tccx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="@dimen/page_padding_left"
+        android:paddingStart="@dimen/page_padding_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_qchc">
+
+        <ImageView
+            android:layout_width="@dimen/mar_30"
+            android:layout_height="@dimen/mar_30"
+            android:scaleType="fitCenter"
+            android:src="@drawable/exit"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_marginStart="@dimen/mar_8"
+            android:layout_height="wrap_content"
+            android:text="退出程序"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/item_title" />
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

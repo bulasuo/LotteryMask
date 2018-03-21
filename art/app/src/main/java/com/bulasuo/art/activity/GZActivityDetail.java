@@ -38,21 +38,21 @@ public class GZActivityDetail extends BaseActivity {
     @BindView(R.id.bar_tv_title)
     TextView barTvTitle;
 
-    public static void launch(Context context, int type){
+    public static void launch(Context context, int type) {
         context.startActivity(new Intent(context, GZActivityDetail.class)
-        .putExtra(FLAG_OBJ, type)
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                .putExtra(FLAG_OBJ, type)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     @Override
     protected Integer getObj() {
-        return (int)super.getObj();
+        return (int) super.getObj();
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        switch (getObj()){
+        switch (getObj()) {
             case TYPE_SSQ:
                 setContentView(R.layout.activity_gz_detail_ssq);
                 barTvTitle.setText("双色球");
@@ -96,12 +96,11 @@ public class GZActivityDetail extends BaseActivity {
             default:
                 break;
         }
-
         initBar();
     }
 
-    private void initBar(){
+    private void initBar() {
         XViewUtil.visvable(barImgLeft, View.VISIBLE);
-        barImgLeft.setOnClickListener(v->onBackPressed());
+        barImgLeft.setOnClickListener(v -> onBackPressed());
     }
 }

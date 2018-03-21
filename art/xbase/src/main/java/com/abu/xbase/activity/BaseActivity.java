@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.abu.xbase.R;
@@ -32,6 +33,7 @@ import retrofit2.Response;
 
 /**
  * activity 直接基类
+ *
  * @author abu
  *         2017/11/13    09:03
  *         bulasuo@foxmail.com
@@ -40,8 +42,9 @@ import retrofit2.Response;
 public abstract class BaseActivity extends BaseResumeTaskActivity {
 
     private int mScreenWidth;
-    public int getScreenWidth(){
-        if(mScreenWidth <= 0) {
+
+    public int getScreenWidth() {
+        if (mScreenWidth <= 0) {
             Resources resources = this.getResources();
             DisplayMetrics dm = resources.getDisplayMetrics();
             mScreenWidth = dm.widthPixels;
@@ -53,18 +56,20 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
     public static final String FLAG_OBJ = "FLAG_OBJ_BASE_ACTIVITY";
     private AlertDialog alertDialog;
     protected Serializable obj;
-    protected Serializable getObj(){
-        if(obj == null)
+
+    protected Serializable getObj() {
+        if (obj == null)
             obj = getIntent().getSerializableExtra(FLAG_OBJ);
         return obj;
     }
-    protected boolean setObj(Serializable obj1){
-        if(obj1 == null) {
+
+    protected boolean setObj(Serializable obj1) {
+        if (obj1 == null) {
             obj = null;
             getIntent().removeExtra(FLAG_OBJ);
             return true;
         }
-        if(getObj() == null || obj1.getClass() == getObj().getClass()){
+        if (getObj() == null || obj1.getClass() == getObj().getClass()) {
             obj = obj1;
             getIntent().putExtra(FLAG_OBJ, obj1);
             return true;
@@ -87,85 +92,109 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
 
     private Unbinder unbinder;
     public static final String REQUEST_CODE = "REQUEST_CODE";
-    public int getRequestCode(){
+
+    public int getRequestCode() {
         return getIntent().getIntExtra(REQUEST_CODE, -1);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             obj = savedInstanceState.getSerializable(FLAG_OBJ);
         }
+    }
+
+    private void initButterKnife() {
         unbinder = ButterKnife.bind(this);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
     }
 
-    public void onRootViewClick(View view){
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        initButterKnife();
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        initButterKnife();
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view, params);
+        initButterKnife();
+    }
+
+    public void onRootViewClick(View view) {
         XUtil.hideSoftKeyBoard(this, view);
     }
 
 
     private static Handler mainHandler;
+
     /**
      * 获取ui主线程handler
      */
-    public static Handler getMainHandler(){
-        if(mainHandler == null){
+    public static Handler getMainHandler() {
+        if (mainHandler == null) {
             mainHandler = new Handler(Looper.getMainLooper());
         }
         return mainHandler;
     }
 
-    public static Message obtainMessage(){
+    public static Message obtainMessage() {
         return getMainHandler().obtainMessage();
     }
 
-    public static Message obtainMessage(int what){
+    public static Message obtainMessage(int what) {
         return getMainHandler().obtainMessage(what);
     }
 
-    public static void post(Message msg){
+    public static void post(Message msg) {
         EventBus.getDefault().post(msg);
     }
 
-    public static void post(int what){
+    public static void post(int what) {
         EventBus.getDefault().post(obtainMessage(what));
     }
 
-    public static void post(int what, Object obj){
+    public static void post(int what, Object obj) {
         Message message = obtainMessage(what);
         message.obj = obj;
         EventBus.getDefault().post(message);
     }
 
-    public static void postDelayDef(int what){
-        getMainHandler().postDelayed(()->EventBus.getDefault().post(obtainMessage(what)), 1000);
+    public static void postDelayDef(int what) {
+        getMainHandler().postDelayed(() -> EventBus.getDefault().post(obtainMessage(what)), 1000);
     }
 
 
     /**
      * EventBus 发送页面请求处理后的结果  (不用原生的 startActivityForResult 和 setResult  是嫌弃太复杂)
+     *
      * @param resultCode 返回页面处理结果的resultCode {@link XConstant.ResultCode}
-     * @param object 返回数据
+     * @param object     返回数据
      */
-    public void postResult(int resultCode, Object object, Task delayTask){
+    public void postResult(int resultCode, Object object, Task delayTask) {
         Message msg = obtainMessage(XConstant.EventBus.REQUEST_TO_RESULT);
         msg.arg1 = getRequestCode();
         msg.arg2 = resultCode;
         msg.obj = object;
         EventBus.getDefault().post(msg);
-        if(delayTask != null)
+        if (delayTask != null)
             delayTask.apply();
     }
 
-    public void postResultDelayed(int resultCode, Object object, int delay, Task delayTask){
+    public void postResultDelayed(int resultCode, Object object, int delay, Task delayTask) {
         getMainHandler().postDelayed(() -> postResult(resultCode, object, delayTask), delay);
     }
 
-    public void postResultDelayedDefault(int resultCode, Object object, Task delayTask){
+    public void postResultDelayedDefault(int resultCode, Object object, Task delayTask) {
         postResultDelayed(resultCode, object, 1000, delayTask);
     }
 
@@ -177,15 +206,15 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if(BaseApp.DEBUG) {
+        if (BaseApp.DEBUG) {
             BaseApp.watch(this);
         }
         destroyProgress();
         super.onDestroy();
     }
 
-    private AlertDialog getProgressDialog(){
-        if (alertDialog == null){
+    private AlertDialog getProgressDialog() {
+        if (alertDialog == null) {
             alertDialog = new AlertDialog.Builder(this)
                     .setCancelable(false)
                     .setView(R.layout.progress_dialog_xbase)
@@ -194,19 +223,19 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
         return alertDialog;
     }
 
-    public void dealResponse(Call call, Response response){
+    public void dealResponse(Call call, Response response) {
         try {
             ToastUtil.showDebug("dealResponse::" + response.toString());
             showProgress(false);
             if (!response.isSuccessful()) {
 //            ToastUtil.showShort("请求失败!");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
         }
     }
 
-    public void dealFailure(Call call, Throwable t){
+    public void dealFailure(Call call, Throwable t) {
         try {
             ToastUtil.showDebug("dealFailure::" + t.toString());
             showProgress(false);
@@ -217,7 +246,7 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
             } else {
                 ToastUtil.showException(t);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
         }
     }
@@ -231,25 +260,25 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
                     alertDialog.dismiss();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
         }
     }
 
     public void showProgress(int msgId) {
-        try{
+        try {
             getProgressDialog();
             TextView textView = alertDialog.findViewById(R.id.tv_msg);
-            if(textView != null)
+            if (textView != null)
                 textView.setText(msgId);
             showProgress(true);
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
         }
     }
 
-    private void destroyProgress(){
-        if(alertDialog != null){
+    private void destroyProgress() {
+        if (alertDialog != null) {
             alertDialog.cancel();
             alertDialog = null;
         }

@@ -1,5 +1,7 @@
 package com.bulasuo.art.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Guideline;
@@ -22,6 +24,7 @@ import butterknife.BindView;
 
 public class GZListActivity extends BaseActivity {
 
+
     @BindView(R.id.view_toolbar)
     Guideline viewToolbar;
     @BindView(R.id.bar_img_left)
@@ -34,8 +37,6 @@ public class GZListActivity extends BaseActivity {
     TextView barTvRight;
     @BindView(R.id.bar_img_right)
     ImageView barImgRight;
-    @BindView(R.id.ll_toolbar)
-    LinearLayout llToolbar;
     @BindView(R.id.ll_ssq)
     LinearLayout llSsq;
     @BindView(R.id.ll_fc3d)
@@ -57,37 +58,42 @@ public class GZListActivity extends BaseActivity {
     @BindView(R.id.ll_11x5)
     LinearLayout ll11x5;
 
+    public static void launch(Context context) {
+        context.startActivity(new Intent(context, GZListActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gz_list);
+        super.onCreate(savedInstanceState);
         initBar();
 
-        llSsq.setOnClickListener(v->
+        llSsq.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_SSQ));
-        llFc3d.setOnClickListener(v->
+        llFc3d.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_FC3D));
-        llSsc.setOnClickListener(v->
+        llSsc.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_SSC));
-        llQlc.setOnClickListener(v->
+        llQlc.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_QLC));
-        llDlt.setOnClickListener(v->
+        llDlt.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_DLT));
-        llQxc.setOnClickListener(v->
+        llQxc.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_QXC));
-        llPl3.setOnClickListener(v->
+        llPl3.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_PL3));
-        llPl5.setOnClickListener(v->
+        llPl5.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_PL5));
-        llK3.setOnClickListener(v->
+        llK3.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_K3));
-        ll11x5.setOnClickListener(v->
+        ll11x5.setOnClickListener(v ->
                 GZActivityDetail.launch(this, GZActivityDetail.TYPE_11X5));
     }
 
-    private void initBar(){
+    private void initBar() {
         XViewUtil.visvable(barImgLeft, View.VISIBLE);
-        barImgLeft.setOnClickListener(v->onBackPressed());
+        barImgLeft.setOnClickListener(v -> onBackPressed());
         barTvTitle.setText("玩法规则");
     }
 }

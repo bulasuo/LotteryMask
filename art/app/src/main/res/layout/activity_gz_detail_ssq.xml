@@ -189,7 +189,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="第二十九条  本规则自批准之日起执行。\n"/>
+                android:text="第二十九条  本规则自批准之日起执行。\n\n\n\n\n"/>
 
 
         </LinearLayout>
