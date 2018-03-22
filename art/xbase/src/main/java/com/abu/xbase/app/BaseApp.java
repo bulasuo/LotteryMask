@@ -80,7 +80,7 @@ public abstract class BaseApp extends Application {
 
     protected abstract String getFileProviderSchemeTag();
 
-    private void initApp() {
+    protected void initApp() {
         DEBUG = isDEBUG();
         RELEASE = isRELEASE();
         _FILE_PROVIDER_SCHEME_TAG = getFileProviderSchemeTag();

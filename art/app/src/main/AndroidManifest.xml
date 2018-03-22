@@ -32,6 +32,9 @@
         <activity
             android:name=".activity.AppTitleBarBaseWebViewActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.DownloadActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

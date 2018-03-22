@@ -24,6 +24,17 @@ public class ImageLoaderUtils {
     public static final int MINWIDTH_OR_HEIGHT = 600;//加载的图片的较小宽度或高度
     public static final int SMALLWIDTH_OR_HEIGHT = 300;//加载的图片的较小宽度或高度
 
+    public static void displayWithoutCache(Context context, ImageView imageView, String url) {
+        try {
+            Glide.with(context)
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .crossFade().into(imageView);
+        } catch (Exception e) {
+            ToastUtil.showException(e);
+        }
+    }
+
     public static void display(Context context, ImageView imageView, String url, int placeholder, int error) {
         try {
             Glide.with(context)

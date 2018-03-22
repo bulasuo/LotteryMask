@@ -22,12 +22,12 @@ public class ToastUtil {
         }
         if (e == null)
             return;
-        if (!XUtil.isUIThread())
-            return;
         try {
-            final Toast toast = Toast.makeText(BaseApp.getInstance()
-                    , e.toString(), Toast.LENGTH_SHORT);
-            toast.show();
+            if (XUtil.isUIThread()){
+                final Toast toast = Toast.makeText(BaseApp.getInstance()
+                        , e.toString(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
             e.printStackTrace();
             ToastUtil.showDebug(e.toString());
         } catch (Exception e1) {

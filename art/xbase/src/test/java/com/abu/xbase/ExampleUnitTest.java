@@ -92,10 +92,16 @@ public class ExampleUnitTest {
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     private static final SimpleDateFormat formatOut =
             new SimpleDateFormat("MM-dd EEEE", Locale.getDefault());
+    private Object getStr(int i){
+        if(i==0)
+            return "xxxx";
+        return null;
+    }
     @Test
     public void addition_isCorrect() throws Exception {
         if(true){
-            System.out.println("--"+"1,".split(",").length);
+            String xx = (String)getStr(1);
+            System.out.println((xx == null)+ "--"+"1,".split(",").length);
             String str0 = "%5.2f";
             System.out.println(String.format(Locale.getDefault(), str0, 6.111));
             System.out.println("--"+formatOut.format(formatIn.parse("2018-03-20 21:15:00.0")));

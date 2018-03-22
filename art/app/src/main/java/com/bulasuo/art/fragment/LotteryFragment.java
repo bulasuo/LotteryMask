@@ -148,10 +148,12 @@ public class LotteryFragment extends BaseFragment {
     }
 
     private void initView() {
+        // TODO: 2018/3/22
 //        rel.setOnClickListener();
     }
 
     private void loadDate() {
+        showProgress(true);
         RetrofitUtil.getService(RetrofitUtil.
                 getGsonRetrofit(AppAPI.HOST_LOTTERY_MAIN_LIST), LotteryService.class)
                 .applyMainList()

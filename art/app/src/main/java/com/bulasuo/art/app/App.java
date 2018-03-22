@@ -3,6 +3,8 @@ package com.bulasuo.art.app;
 import com.abu.xbase.app.BaseApp;
 import com.bulasuo.art.BuildConfig;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * @author abu
  *         2018/3/19    10:55
@@ -10,6 +12,14 @@ import com.bulasuo.art.BuildConfig;
  */
 
 public class App extends BaseApp {
+
+    @Override
+    protected void initApp() {
+        super.initApp();
+        JPushInterface.setDebugMode(false);
+        JPushInterface.init(this);
+    }
+
     @Override
     protected boolean isDEBUG() {
         return BuildConfig._DEBUG;

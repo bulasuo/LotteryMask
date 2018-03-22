@@ -52,12 +52,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtil {
     private static boolean DEBUG;
+    private static final long CONNECTION_TIMEOUT_DOWNLOAD = 30 * 60;
+    private static final long WRITE_TIMEOUT_DOWNLOAD = 30 * 60;
+    private static final long READ_TIMEOUT_DOWNLOAD = 30 * 60;
     private static final long CONNECTION_TIMEOUT = 10;
     private static final long WRITE_TIMEOUT = 15;
     private static final long READ_TIMEOUT = 15;
-    private static Retrofit defaultRetrofit, gsonRetrofit;
+    private static Retrofit defaultRetrofit, gsonRetrofit, downloadRetrofit;
     private static Application mAppContext;
-    private static final String HOST = API.HOST;
+    private static final String BASE_URL = API.BASE_URL;
     private static final HashMap<Retrofit, HashMap<String, Object>> serviceMap = new HashMap<>();
 
     public RetrofitUtil() {
@@ -101,15 +104,26 @@ public class RetrofitUtil {
         }
     }
 
+    public static Retrofit getDownloadRetrofit(String baseUrl) {
+        if (downloadRetrofit == null
+                || !XUtil.equals(downloadRetrofit.baseUrl(), HttpUrl.parse(baseUrl))) {
+            downloadRetrofit = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(geDownloadClient())
+                    .build();
+        }
+        return downloadRetrofit;
+    }
+
     /**
      * 请使用 {@link #getGsonRetrofit(String)}
      */
     @Deprecated
-    public static Retrofit getDefaultRetrofit(String host) {
+    public static Retrofit getDefaultRetrofit(String baseUrl) {
         if (defaultRetrofit == null
-                || !XUtil.equals(gsonRetrofit.baseUrl(), HttpUrl.parse(host))) {
+                || !XUtil.equals(defaultRetrofit.baseUrl(), HttpUrl.parse(baseUrl))) {
             defaultRetrofit = new Retrofit.Builder()
-                    .baseUrl(host)
+                    .baseUrl(baseUrl)
                     .client(getDefaultClient())
                     .build();
         }
@@ -121,18 +135,18 @@ public class RetrofitUtil {
      */
     @Deprecated
     public static Retrofit getDefaultRetrofit() {
-        return getDefaultRetrofit(HOST);
+        return getDefaultRetrofit(BASE_URL);
     }
 
-    public static Retrofit getGsonRetrofit(String host) {
+    public static Retrofit getGsonRetrofit(String baseUrl) {
         if (gsonRetrofit == null
-                || !XUtil.equals(gsonRetrofit.baseUrl(), HttpUrl.parse(host))) {
+                || !XUtil.equals(gsonRetrofit.baseUrl(), HttpUrl.parse(baseUrl))) {
             Gson gson = new GsonBuilder()
                     //配置你的Gson 可自定义Gson
                     .setDateFormat("yyyy-MM-dd hh:mm:ss")
                     .create();
             gsonRetrofit = new Retrofit.Builder()
-                    .baseUrl(host)
+                    .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getDefaultClient())
                     .build();
@@ -141,7 +155,18 @@ public class RetrofitUtil {
     }
 
     public static Retrofit getGsonRetrofit() {
-        return getGsonRetrofit(HOST);
+        return getGsonRetrofit(BASE_URL);
+    }
+
+    private static OkHttpClient geDownloadClient() {
+        return new OkHttpClient.Builder()
+                .addInterceptor(new CustomInterceptor())
+                .connectTimeout(CONNECTION_TIMEOUT_DOWNLOAD, TimeUnit.SECONDS)
+                .writeTimeout(WRITE_TIMEOUT_DOWNLOAD, TimeUnit.SECONDS)
+                .readTimeout(READ_TIMEOUT_DOWNLOAD, TimeUnit.SECONDS)
+                .hostnameVerifier(new TrustAllHostnameVerifier())
+                .sslSocketFactory(createSSLSocketFactory(), new TrustAllManager())
+                .build();
     }
 
     private static OkHttpClient getDefaultClient() {

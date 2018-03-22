@@ -12,7 +12,7 @@ public class API {
 
     public static String BUCKET = "pinestudy-demo";
     public static String ENDPOINT = "http://oss-cn-beijing.aliyuncs.com";
-    public static String HOST;
+    public static String BASE_URL;
     public static final String SOCKRT_HOST = "47.93.121.101";
     public static final int SOCKRT_PORT = 10088;
     public static final int TIM_APPID = 1400044920;
@@ -20,9 +20,9 @@ public class API {
 
     static {
         if (BaseApp.RELEASE)
-            HOST = "http://www.pinestudy.com:8090";
+            BASE_URL = "http://www.pinestudy.com:8090";
         else
-            HOST = "http://www.pinestudy.com:8089";
+            BASE_URL = "http://www.pinestudy.com:8089";
 //        HOST = "http://www.pinestudy.com:8090";
     }
 

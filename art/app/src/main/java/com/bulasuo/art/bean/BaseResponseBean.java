@@ -19,14 +19,14 @@ import retrofit2.Response;
 public class BaseResponseBean {
 
     public ArrayList<LotteryBean> numberList;
-    public String result, desc;
+    public String result, desc, data, rt_code, type;
+
 
     public static boolean isSuccessful(Response<BaseResponseBean> response,
                                            boolean showErrInfo){
         boolean success =  response != null
                 && response.body() != null
-                && response.body().result != null
-                && TextUtils.equals(response.body().result, "01001");
+                && TextUtils.equals(response.body().rt_code, "200");
         if(!success && showErrInfo){
             showErrInfo(response);
         }
