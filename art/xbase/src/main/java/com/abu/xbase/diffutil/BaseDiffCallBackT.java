@@ -61,6 +61,7 @@ public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
 
     /**
      * 同一个id的item 是不是内容相同
+     *
      * @param oldItemPosition
      * @param newItemPosition
      * @return
@@ -71,7 +72,12 @@ public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
     }
 
     /**
-     * 该方法在DiffUtil高级用法中用到 ，暂且不提
+     * 该方法在DiffUtil高级用法中用到,
+     * 返回areContentsTheSame里面两个bean的差异 put到object
+     * 在{@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)}
+     * 中List<Object> payloads中 payloads.get(0) 然后动态更新差异性item的子View
+     * PS: 这里object 可以用Map<String, String> 然后在onBindViewHolder中写动态更新
+     *
      * @param oldItemPosition
      * @param newItemPosition
      * @return
