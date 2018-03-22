@@ -35,6 +35,7 @@
             </LinearLayout>
             
             <RelativeLayout
+                android:id="@+id/rel"
                 android:paddingStart="@dimen/mar_16"
                 android:paddingEnd="@dimen/mar_16"
                 android:paddingTop="@dimen/mar_8"
@@ -154,6 +155,7 @@
                 android:background="@color/line_gray"/>
 
             <RelativeLayout
+                android:id="@+id/rel_1"
                 android:paddingStart="@dimen/mar_16"
                 android:paddingEnd="@dimen/mar_16"
                 android:paddingTop="@dimen/mar_8"
@@ -273,6 +275,7 @@
                 android:background="@color/line_gray"/>
 
             <RelativeLayout
+                android:id="@+id/rel_2"
                 android:paddingStart="@dimen/mar_16"
                 android:paddingEnd="@dimen/mar_16"
                 android:paddingTop="@dimen/mar_8"
@@ -407,6 +410,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/rel_3"
                 android:paddingStart="@dimen/mar_16"
                 android:paddingEnd="@dimen/mar_16"
                 android:paddingTop="@dimen/mar_8"
@@ -526,6 +530,7 @@
                 android:background="@color/line_gray"/>
 
             <RelativeLayout
+                android:id="@+id/rel_4"
                 android:paddingStart="@dimen/mar_16"
                 android:paddingEnd="@dimen/mar_16"
                 android:paddingTop="@dimen/mar_8"
@@ -645,6 +650,7 @@
                 android:background="@color/line_gray"/>
 
             <RelativeLayout
+                android:id="@+id/rel_5"
                 android:paddingStart="@dimen/mar_16"
                 android:paddingEnd="@dimen/mar_16"
                 android:paddingTop="@dimen/mar_8"
@@ -764,6 +770,7 @@
                 android:background="@color/line_gray"/>
 
             <RelativeLayout
+                android:id="@+id/rel_6"
                 android:paddingStart="@dimen/mar_16"
                 android:paddingEnd="@dimen/mar_16"
                 android:paddingTop="@dimen/mar_8"

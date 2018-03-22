@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.abu.xbase.fragment.BaseFragment;
@@ -119,6 +120,20 @@ public class LotteryFragment extends BaseFragment {
     LinearLayout llPoints6;
     @BindView(R.id.tv_total_6)
     TextView tvTotal6;
+    @BindView(R.id.rel)
+    RelativeLayout rel;
+    @BindView(R.id.rel_1)
+    RelativeLayout rel1;
+    @BindView(R.id.rel_2)
+    RelativeLayout rel2;
+    @BindView(R.id.rel_3)
+    RelativeLayout rel3;
+    @BindView(R.id.rel_4)
+    RelativeLayout rel4;
+    @BindView(R.id.rel_5)
+    RelativeLayout rel5;
+    @BindView(R.id.rel_6)
+    RelativeLayout rel6;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -128,7 +143,12 @@ public class LotteryFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
         loadDate();
+    }
+
+    private void initView() {
+//        rel.setOnClickListener();
     }
 
     private void loadDate() {
@@ -264,6 +284,5 @@ public class LotteryFragment extends BaseFragment {
 
 
     }
-
 
 }
