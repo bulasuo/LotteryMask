@@ -7,6 +7,7 @@ import java.util.Stack;
 
 /**
  * 处理回退事件
+ *
  * @author abu
  *         2017/11/13    09:21
  *         bulasuo@foxmail.com
@@ -25,6 +26,7 @@ public abstract class BaseBackPressedActivity extends AppCompatActivity {
     public interface BackListener {
         /**
          * 返回按钮事件
+         *
          * @return 是否拦截事件
          */
         boolean onBack();
@@ -32,6 +34,7 @@ public abstract class BaseBackPressedActivity extends AppCompatActivity {
 
     /**
      * remove 第一个请求的listener
+     *
      * @param listener {@link BackListener}
      */
     public void removeBackListener(BackListener listener) {
@@ -39,8 +42,8 @@ public abstract class BaseBackPressedActivity extends AppCompatActivity {
             return;
         }
         Iterator<BackListener> i = backStack.iterator();
-        for(BackListener l = null; i.hasNext(); l = i.next()){
-            if(l == listener){
+        for (BackListener l = null; i.hasNext(); l = i.next()) {
+            if (l == listener) {
                 i.remove();
                 break;
             }
@@ -49,10 +52,11 @@ public abstract class BaseBackPressedActivity extends AppCompatActivity {
 
     /**
      * add 监听器
+     *
      * @param listener {@link BackListener}
      */
     public void addBackListener(BackListener listener) {
-        if (backStack == null){
+        if (backStack == null) {
             backStack = new Stack<>();
         }
         backStack.addElement(listener);
@@ -61,12 +65,13 @@ public abstract class BaseBackPressedActivity extends AppCompatActivity {
 
     /**
      * pop返回事件栈,直至事件被拦截或end
+     *
      * @return 是否拦截返回事件
      */
     protected boolean onBack() {
         if (backStack != null) {
             for (; !backStack.isEmpty(); ) {
-                if (backStack.pop().onBack()){
+                if (backStack.pop().onBack()) {
                     return true;
                 }
             }
@@ -76,7 +81,7 @@ public abstract class BaseBackPressedActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!onBack()){
+        if (!onBack()) {
             super.onBackPressed();
         }
     }

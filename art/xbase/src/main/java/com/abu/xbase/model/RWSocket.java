@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * https://www.cnblogs.com/jerrychoi/archive/2010/04/15/1712931.html
+ *
  * @author abu
  *         2018/2/13    09:27
  *         bulasuo@foxmail.com
@@ -56,7 +57,6 @@ public class RWSocket {
     private String student_id, teacher_id;
 
     /**
-     *
      * @param host
      * @param port
      * @param handler
@@ -66,8 +66,8 @@ public class RWSocket {
                     @NonNull Handler handler,
                     @NonNull Task destroyTask,
                     String studentId, String teacherId) {
-        ToastUtil.showDebug(""+studentId+"-"+teacherId);
-        student_id =studentId;
+        ToastUtil.showDebug("" + studentId + "-" + teacherId);
+        student_id = studentId;
         teacher_id = teacherId;
         mHost = host;
         mPort = port;
@@ -77,10 +77,10 @@ public class RWSocket {
     }
 
     @UiThread
-    public void start(){
+    public void start() {
         mDestroy = false;
         tryCloseRes();
-        mThreadPool.execute(()->{
+        mThreadPool.execute(() -> {
             try {
 //                Thread.sleep(200);
                 getNewSocket();
@@ -102,10 +102,10 @@ public class RWSocket {
     }
 
 
-    private void onDestroy_destroyLock(){
-        synchronized (destroyLock){
+    private void onDestroy_destroyLock() {
+        synchronized (destroyLock) {
             ToastUtil.showDebug("onDestroy_destroyLock");
-            if(!mDestroy) {
+            if (!mDestroy) {
                 mDestroy = true;
                 if (mOnDestroyTask != null && mHandler != null)
                     mHandler.post(() -> {
@@ -126,7 +126,7 @@ public class RWSocket {
 
     @UiThread
     public void tryDestroy_destroyLock() {
-        synchronized (destroyLock){
+        synchronized (destroyLock) {
             ToastUtil.showDebug("tryDestroy_destroyLock");
             mDestroy = true;
             mHandler = null;
@@ -134,16 +134,16 @@ public class RWSocket {
         }
     }
 
-    private void tryCloseRes(){
+    private void tryCloseRes() {
         try {
             if (mReaderThread != null) {
                 mReaderThread.tryDestroyThis = true;
                 mReaderThread = null;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(mSocket != null) {
+        if (mSocket != null) {
             mThreadPool.execute(() -> {
                 try {
                     if (mSocket != null) {
@@ -169,28 +169,28 @@ public class RWSocket {
     }
 
     //获取历史记录包
-    private void getHistorySocket(String teacher_id){
+    private void getHistorySocket(String teacher_id) {
         JSONObject obj = new JSONObject();
         try {
-            obj.put("messageId",11);
-            obj.put("teacherId",teacher_id);
+            obj.put("messageId", 11);
+            obj.put("teacherId", teacher_id);
             String jsonStr = obj.toString();
-            sendMsg(11,jsonStr);
+            sendMsg(11, jsonStr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     //发送建立连接包
-    private void connectionSocket(String student_id, String teacher_id){
+    private void connectionSocket(String student_id, String teacher_id) {
 
         JSONObject msgBody = new JSONObject();
         try {
-            msgBody.put("userId",student_id);
-            msgBody.put("userType","2");
-            msgBody.put("teacherId",teacher_id);
+            msgBody.put("userId", student_id);
+            msgBody.put("userType", "2");
+            msgBody.put("teacherId", teacher_id);
             String jsonStr = msgBody.toString();
-            sendMsg(1,jsonStr);
+            sendMsg(1, jsonStr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -198,7 +198,7 @@ public class RWSocket {
 
     private final Object outLock = new Object();
 
-    public void sendMsg(final int type,final String jsonStr){
+    public void sendMsg(final int type, final String jsonStr) {
         mThreadPool.execute(() -> {
             synchronized (outLock) {
                 try {
@@ -229,13 +229,13 @@ public class RWSocket {
         return targets;
     }
 
-    private static byte[] readByteArray(InputStream is, int length) throws Exception{
+    private static byte[] readByteArray(InputStream is, int length) throws Exception {
         if (length <= 0) {
             throw new Exception("[TCP]tcp读取长度不应小于0");
         }
         int count = 0;
         byte[] bytes = new byte[length];
-        for(; (count += is.read(bytes, count, (bytes.length - count))) < bytes.length;);
+        for (; (count += is.read(bytes, count, (bytes.length - count))) < bytes.length; ) ;
         return bytes;
     }
 
@@ -266,12 +266,12 @@ public class RWSocket {
         return b;
     }
 
-     class ReaderThread extends Thread{
-         private boolean tryDestroyThis;
+    class ReaderThread extends Thread {
+        private boolean tryDestroyThis;
 
-         public ReaderThread(){
-             super.setName(this.getClass().getName());
-         }
+        public ReaderThread() {
+            super.setName(this.getClass().getName());
+        }
 
         @Override
         public void run() {
@@ -292,39 +292,39 @@ public class RWSocket {
 
                     bytes = readByteArray(inputStream, 1);
                     type = bytes[0] & 0xff;
-                    ToastUtil.showDebug(":type:"+ type);
+                    ToastUtil.showDebug(":type:" + type);
 
                     bytes = readByteArray(inputStream, 4);
                     length = bytes2Int(bytes);
-                    ToastUtil.showDebug(":length:"+length);
+                    ToastUtil.showDebug(":length:" + length);
 
                     bytes = readByteArray(inputStream, 8);
                     timestamp = bytes2Long(bytes);
-                    ToastUtil.showDebug(":timestamp:"+timestamp);
+                    ToastUtil.showDebug(":timestamp:" + timestamp);
 
-                    if(length > 0) {
+                    if (length > 0) {
                         bytes = readByteArray(inputStream, length);
                         jsonBody = new String(bytes, "utf-8");
-                    }else {
+                    } else {
                         jsonBody = null;
                     }
-                    ToastUtil.showDebug(":jsonBody:"+jsonBody);
+                    ToastUtil.showDebug(":jsonBody:" + jsonBody);
 
-                    if(mHandler != null) {
+                    if (mHandler != null) {
                         msg = mHandler.obtainMessage();
                         msg.what = type;
                         msg.obj = jsonBody;
                         mHandler.handleMessage(msg);
                     }
-                    if(type == 1){
+                    if (type == 1) {
                         ToastUtil.showDebug("建立连接成功*************************");
                         getHistorySocket(teacher_id);
                     }
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 ToastUtil.showDebug("finally-close-res");
                 onDestroy_destroyLock();
             }

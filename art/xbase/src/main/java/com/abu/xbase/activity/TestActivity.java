@@ -22,7 +22,7 @@ import java.util.List;
 
 public class TestActivity extends Activity {
 
-    public static void launch(Context context){
+    public static void launch(Context context) {
         context.startActivity(new Intent(context, TestActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
@@ -33,13 +33,13 @@ public class TestActivity extends Activity {
         super.onCreate(savedInstanceState);
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getApplicationContext(), "lenve.db", null);
         DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDb());
-        findViewById(R.id.btn_0).setOnClickListener(v->{
+        findViewById(R.id.btn_0).setOnClickListener(v -> {
             DaoSession daoSession = daoMaster.newSession();
             UserDao userDao = daoSession.getUserDao();
             userDao.deleteAll();
-            User user = new User(null, "zhangsan","张三");
+            User user = new User(null, "zhangsan", "张三");
             userDao.insertOrReplace(user);
-            user = new User(null, "zhangsanxx","张三xx");
+            user = new User(null, "zhangsanxx", "张三xx");
             userDao.insert(user);
             /**清除session缓存,查询才能查到最新*/
             userDao.detachAll();
@@ -47,14 +47,14 @@ public class TestActivity extends Activity {
 
             List<User> list = userDao.queryBuilder()
                     .where(UserDao.Properties.Id.between(0, 13)).limit(5).build().list();
-            if(list != null) {
+            if (list != null) {
                 for (int i = 0; i < list.size(); i++) {
                     System.out.println(":::" + list.get(i).toString());
                     list.get(i).setNickname("www");
                 }
             }
 
-            user = new User(null, "zhangsanxx","张三111");
+            user = new User(null, "zhangsanxx", "张三111");
             userDao.insert(user);
             user.setNickname("bulasuo");
             userDao.update(user);
@@ -66,7 +66,7 @@ public class TestActivity extends Activity {
 
             list = userDao.queryBuilder()
                     .where(UserDao.Properties.Id.between(0, 13)).limit(5).build().list();
-            if(list != null) {
+            if (list != null) {
                 for (int i = 0; i < list.size(); i++) {
                     System.out.println(":::" + list.get(i).toString());
                 }

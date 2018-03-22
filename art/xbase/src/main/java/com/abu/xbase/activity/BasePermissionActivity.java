@@ -29,7 +29,7 @@ public class BasePermissionActivity extends BaseActivity {
             if (ContextCompat.checkSelfPermission(this, permission)
                     != PackageManager.PERMISSION_GRANTED) {
                 granted = false;
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)){
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                     rationale = true;
                 }
 

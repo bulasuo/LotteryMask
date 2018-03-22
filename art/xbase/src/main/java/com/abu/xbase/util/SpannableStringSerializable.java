@@ -10,7 +10,7 @@ import java.io.Serializable;
  *         bulasuo@foxmail.com
  */
 
-public class SpannableStringSerializable extends SpannableString implements Serializable{
+public class SpannableStringSerializable extends SpannableString implements Serializable {
     public SpannableStringSerializable(CharSequence source) {
         super(source);
     }

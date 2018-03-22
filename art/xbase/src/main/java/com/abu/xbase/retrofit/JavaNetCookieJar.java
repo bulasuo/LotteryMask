@@ -32,7 +32,9 @@ import static okhttp3.internal.Util.delimiterOffset;
 import static okhttp3.internal.Util.trimSubstring;
 import static okhttp3.internal.platform.Platform.WARN;
 
-/** A cookie jar that delegates to a {@link java.net.CookieHandler}. */
+/**
+ * A cookie jar that delegates to a {@link java.net.CookieHandler}.
+ */
 public final class JavaNetCookieJar implements CookieJar {
     private final CookieHandler cookieHandler;
 
@@ -40,7 +42,8 @@ public final class JavaNetCookieJar implements CookieJar {
         this.cookieHandler = cookieHandler;
     }
 
-    @Override public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+    @Override
+    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
         if (cookieHandler != null) {
             List<String> cookieStrings = new ArrayList<>();
             for (Cookie cookie : cookies) {
@@ -55,7 +58,8 @@ public final class JavaNetCookieJar implements CookieJar {
         }
     }
 
-    @Override public List<Cookie> loadForRequest(HttpUrl url) {
+    @Override
+    public List<Cookie> loadForRequest(HttpUrl url) {
         // The RI passes all headers. We don't have 'em, so we don't pass 'em!
         Map<String, List<String>> headers = Collections.emptyMap();
         Map<String, List<String>> cookieHeaders;

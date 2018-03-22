@@ -18,8 +18,8 @@ public class API {
     public static final int TIM_APPID = 1400044920;
     public static final String TIM_ACCOUNT_TYPE = "18213";
 
-    static{
-        if(BaseApp.RELEASE)
+    static {
+        if (BaseApp.RELEASE)
             HOST = "http://www.pinestudy.com:8090";
         else
             HOST = "http://www.pinestudy.com:8089";

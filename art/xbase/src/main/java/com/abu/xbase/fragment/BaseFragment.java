@@ -50,10 +50,10 @@ public abstract class BaseFragment extends BaseResumeTaskFragment {
         if (getView() == null) {
             return;
         }
-        ToastUtil.showDebug("onHiddenChanged::"+hidden+"-"+isHidden()+getClass().getSimpleName());
+        ToastUtil.showDebug("onHiddenChanged::" + hidden + "-" + isHidden() + getClass().getSimpleName());
         if (!hidden) {
             onResume();
-        }else {
+        } else {
             onPause();
         }
     }
@@ -66,7 +66,7 @@ public abstract class BaseFragment extends BaseResumeTaskFragment {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if(BaseApp.DEBUG) {
+        if (BaseApp.DEBUG) {
             BaseApp.watch(this);
         }
         super.onDestroyView();
@@ -101,29 +101,30 @@ public abstract class BaseFragment extends BaseResumeTaskFragment {
 
     /**
      * 显示等待框
+     *
      * @param show
      */
     public void showProgress(boolean show) {
         Activity activity = getActivity();
-        if(activity instanceof BaseActivity)
+        if (activity instanceof BaseActivity)
             ((BaseActivity) activity).showProgress(show);
     }
 
     public void showProgress(int msgId) {
         Activity activity = getActivity();
-        if(activity instanceof BaseActivity)
+        if (activity instanceof BaseActivity)
             ((BaseActivity) activity).showProgress(msgId);
     }
 
-    public void dealResponse(Call call, Response response){
+    public void dealResponse(Call call, Response response) {
         Activity activity = getActivity();
-        if(activity instanceof BaseActivity)
+        if (activity instanceof BaseActivity)
             ((BaseActivity) activity).dealResponse(call, response);
     }
 
-    public void dealFailure(Call call, Throwable t){
+    public void dealFailure(Call call, Throwable t) {
         Activity activity = getActivity();
-        if(activity instanceof BaseActivity)
+        if (activity instanceof BaseActivity)
             ((BaseActivity) activity).dealFailure(call, t);
     }
 

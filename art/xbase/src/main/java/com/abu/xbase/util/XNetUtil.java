@@ -12,19 +12,20 @@ import java.util.Enumeration;
  */
 
 public class XNetUtil {
-    public XNetUtil(){
+    public XNetUtil() {
         throw new IllegalArgumentException("please use static method!");
     }
 
     /**
      * 获取本机的ip地址（3中方法都包括）
+     *
      * @return
      */
-    public static String getIpAdress(){
+    public static String getIpAdress() {
         String ip = null;
         try {
             ip = getIpAddress();
-            if (ip==null){
+            if (ip == null) {
                 ip = getLocalIpAddress();
             }
         } catch (Exception e) {
@@ -35,26 +36,21 @@ public class XNetUtil {
 
     /**
      * gps获取ip
+     *
      * @return
      */
-    private static String getLocalIpAddress()
-    {
-        try
-        {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();)
-            {
+    private static String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
                 NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();)
-                {
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress())
-                    {
+                    if (!inetAddress.isLoopbackAddress()) {
                         return inetAddress.getHostAddress().toString();
                     }
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ToastUtil.showException(ex);
         }
         return null;
@@ -85,26 +81,28 @@ public class XNetUtil {
 
     /**
      * 格式化ip地址（192.168.11.1）
+     *
      * @param i
      * @return
      */
     private static String intToIp(int i) {
 
-        return (i & 0xFF ) + "." +
-                ((i >> 8 ) & 0xFF) + "." +
-                ((i >> 16 ) & 0xFF) + "." +
-                ( i >> 24 & 0xFF) ;
+        return (i & 0xFF) + "." +
+                ((i >> 8) & 0xFF) + "." +
+                ((i >> 16) & 0xFF) + "." +
+                (i >> 24 & 0xFF);
     }
+
     /**
-     *  3G/4g网络IP
+     * 3G/4g网络IP
      */
     private static String getIpAddress() {
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface
-                    .getNetworkInterfaces(); en.hasMoreElements();) {
+                    .getNetworkInterfaces(); en.hasMoreElements(); ) {
                 NetworkInterface intf = en.nextElement();
                 for (Enumeration<InetAddress> enumIpAddr = intf
-                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                        .getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress()
                             && inetAddress instanceof Inet4Address) {

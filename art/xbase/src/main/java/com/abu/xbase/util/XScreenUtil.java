@@ -16,7 +16,7 @@ import android.view.WindowManager;
 
 public class XScreenUtil {
 
-    public XScreenUtil(){
+    public XScreenUtil() {
         throw new IllegalArgumentException("please use static method!");
     }
 

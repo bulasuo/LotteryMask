@@ -58,7 +58,8 @@ public class RetrofitUtil {
     private static Application mAppContext;
     private static final String HOST = API.HOST;
     private static final HashMap<Retrofit, HashMap<String, Object>> serviceMap = new HashMap<>();
-    public RetrofitUtil(){
+
+    public RetrofitUtil() {
         throw new IllegalArgumentException("please use static method!");
     }
 
@@ -66,29 +67,31 @@ public class RetrofitUtil {
     public interface Function {
         /**
          * 获取token
+         *
          * @return token
          */
         String apply();
     }
 
     private static Function reLogin;
-    public static void init(boolean debug, Application appContext, Function reLogin1){
+
+    public static void init(boolean debug, Application appContext, Function reLogin1) {
         DEBUG = debug;
         mAppContext = appContext;
         reLogin = reLogin1;
     }
 
-    public static <T> T getService(Retrofit retrofit, final Class<T> serviceClass){
+    public static <T> T getService(Retrofit retrofit, final Class<T> serviceClass) {
         HashMap<String, Object> map = serviceMap.get(retrofit);
         T service;
-        if(map != null){
+        if (map != null) {
             service = (T) map.get(serviceClass.getName());
-            if(service != null)
+            if (service != null)
                 return service;
             service = retrofit.create(serviceClass);
             map.put(serviceClass.getName(), service);
             return service;
-        }else {
+        } else {
             service = retrofit.create(serviceClass);
             map = new HashMap<>();
             map.put(serviceClass.getName(), service);
@@ -102,7 +105,7 @@ public class RetrofitUtil {
      */
     @Deprecated
     public static Retrofit getDefaultRetrofit(String host) {
-        if(defaultRetrofit == null){
+        if (defaultRetrofit == null) {
             defaultRetrofit = new Retrofit.Builder()
                     .baseUrl(host)
                     .client(getDefaultClient())
@@ -120,7 +123,7 @@ public class RetrofitUtil {
     }
 
     public static Retrofit getGsonRetrofit(String host) {
-        if(gsonRetrofit == null){
+        if (gsonRetrofit == null) {
             Gson gson = new GsonBuilder()
                     //配置你的Gson 可自定义Gson
                     .setDateFormat("yyyy-MM-dd hh:mm:ss")
@@ -138,7 +141,7 @@ public class RetrofitUtil {
         return getGsonRetrofit(HOST);
     }
 
-    private static OkHttpClient getDefaultClient(){
+    private static OkHttpClient getDefaultClient() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(DEBUG
                 ? HttpLoggingInterceptor.Level.BODY
@@ -178,11 +181,12 @@ public class RetrofitUtil {
      * 获取User-Agent
      */
     private static String mUserAgent;
+
     public static String getUserAgent() {
-        if(mUserAgent == null)
+        if (mUserAgent == null)
             mUserAgent = "device:" + fromUnicodeU(String.valueOf(Build.MODEL)) +
                     ";os:android" + Build.VERSION.SDK +
-                    ";"+getVersionCodeAndName(mAppContext);
+                    ";" + getVersionCodeAndName(mAppContext);
         return mUserAgent;
     }
 

@@ -19,30 +19,38 @@ public class User {
     private String username;
     @Property(nameInDb = "NICKNAME")
     private String nickname;
+
     public String getNickname() {
         return this.nickname;
     }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
     public String getUsername() {
         return this.username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public Long getId() {
         return this.id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     @Generated(hash = 523935516)
     public User(Long id, String username, String nickname) {
         this.id = id;
         this.username = username;
         this.nickname = nickname;
     }
+
     @Generated(hash = 586692638)
     public User() {
     }

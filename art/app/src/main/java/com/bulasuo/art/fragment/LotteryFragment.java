@@ -29,6 +29,10 @@ public class LotteryFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        loadDate();
+    }
+
+    private void loadDate(){
         RetrofitUtil.getService(RetrofitUtil.
                 getGsonRetrofit(AppAPI.HOST_LOTTERY_MAIN_LIST), LotteryService.class)
                 .applyMainList()

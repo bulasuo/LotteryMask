@@ -11,12 +11,13 @@ import android.util.DisplayMetrics;
  */
 
 public class XDisplayUtil {
-    public XDisplayUtil(){
+    public XDisplayUtil() {
         throw new IllegalArgumentException("please use static method!");
     }
 
     /**
      * 根据手机分辨率从DP转成PX
+     *
      * @param context
      * @param dpValue
      * @return
@@ -28,6 +29,7 @@ public class XDisplayUtil {
 
     /**
      * 将sp值转换为px值，保证文字大小不变
+     *
      * @param spValue
      * @return
      */
@@ -38,6 +40,7 @@ public class XDisplayUtil {
 
     /**
      * 根据手机的分辨率PX(像素)转成DP
+     *
      * @param context
      * @param pxValue
      * @return
@@ -49,6 +52,7 @@ public class XDisplayUtil {
 
     /**
      * 将px值转换为sp值，保证文字大小不变
+     *
      * @param pxValue
      * @return
      */
@@ -58,13 +62,13 @@ public class XDisplayUtil {
         return (int) (pxValue / fontScale + 0.5f);
     }
 
-    public static int getScreenW(Context context){
+    public static int getScreenW(Context context) {
         Resources resources = context.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         return dm.widthPixels;
     }
 
-    public static int getScreenH(Context context){
+    public static int getScreenH(Context context) {
         Resources resources = context.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         return dm.heightPixels;

@@ -22,9 +22,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 public class ReflashTestActivity extends Activity {
 
-    public static void launch(Context context){
+    public static void launch(Context context) {
         context.startActivity(new Intent(context, ReflashTestActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     @Override

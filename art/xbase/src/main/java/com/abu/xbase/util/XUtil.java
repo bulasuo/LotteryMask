@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
 
 public class XUtil {
 
-    public XUtil(){
+    public XUtil() {
         throw new IllegalArgumentException("please use static method!");
     }
 
@@ -63,14 +63,15 @@ public class XUtil {
     public static String REGEX_8_16_and = "^(?![^a-zA-Z]+$)(?!\\D+$).{8,16}$";
     public static String REGEX_8_16 = "[0-9A-Za-z]{8,16}";
     private static Gson gson;
+
     private static Gson getGson() {
-        if(gson == null){
+        if (gson == null) {
             gson = new Gson();
         }
         return gson;
     }
 
-    public static boolean isUIThread(){
+    public static boolean isUIThread() {
         return Looper.getMainLooper() == Looper.myLooper();
     }
 
@@ -148,8 +149,8 @@ public class XUtil {
         return isConnetced;
     }
 
-    public static void jump2AppDetailSettings(Context context){
-        try{
+    public static void jump2AppDetailSettings(Context context) {
+        try {
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Intent intent = new Intent();
                 intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
@@ -158,27 +159,27 @@ public class XUtil {
                 intent.putExtra("app_package", context.getPackageName());
                 intent.putExtra("app_uid", context.getApplicationInfo().uid);
                 context.startActivity(intent);
-            }else {
+            } else {
                 ToastUtil.showShort("请手动进入应用的权限设置页面!");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showShort("请手动进入应用的权限设置页面!");
         }
     }
 
     public static void jump2AppMarket(Context context) {
-        try{
+        try {
             Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-        }catch(Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
             ToastUtil.showShort("Couldn't launch the market !");
         }
     }
 
-    public static void setClipboard(Context context, String in){
+    public static void setClipboard(Context context, String in) {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
             ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(
                     Context.CLIPBOARD_SERVICE);
@@ -245,7 +246,7 @@ public class XUtil {
         InputMethodManager imm = (InputMethodManager) activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         /** 强制隐藏键盘*/
-        if(imm != null)
+        if (imm != null)
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
@@ -256,15 +257,15 @@ public class XUtil {
         InputMethodManager imm = (InputMethodManager) activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         View view = activity.getCurrentFocus();
-        if(imm != null && view != null)
+        if (imm != null && view != null)
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static <T> T jsonStr2Object(String json, Type typeOfT){
+    public static <T> T jsonStr2Object(String json, Type typeOfT) {
         return getGson().fromJson(json, typeOfT);
     }
 
-    public static <T> T jsonStr2Object(String json, Class<T> tClass){
+    public static <T> T jsonStr2Object(String json, Class<T> tClass) {
         return getGson().fromJson(json, tClass);
     }
 
@@ -291,19 +292,19 @@ public class XUtil {
     }
 
     public static byte[] stream2Bytes(InputStream in) throws IOException {
-        ByteArrayOutputStream out=new ByteArrayOutputStream();
-        byte[] buffer=new byte[2048];
-        int n=0;
-        while ( (n=in.read(buffer)) !=-1) {
-            out.write(buffer,0,n);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int n = 0;
+        while ((n = in.read(buffer)) != -1) {
+            out.write(buffer, 0, n);
         }
         return out.toByteArray();
     }
 
 
-
     /**
      * 回到android home
+     *
      * @param context 上下文
      */
     public static void backToHome(Context context) {
@@ -314,9 +315,10 @@ public class XUtil {
 
     /**
      * 获取app渠道名
+     *
      * @return
      */
-    public static String getAppChannel(){
+    public static String getAppChannel() {
         try {
             ApplicationInfo appInfo = BaseApp.getInstance().getPackageManager()
                     .getApplicationInfo(BaseApp.getInstance().getPackageName(),
@@ -369,12 +371,12 @@ public class XUtil {
         return new String(ret);
     }
 
-    public static byte[] hexString2bytes(String s){
+    public static byte[] hexString2bytes(String s) {
         String ss = s.replace(" ", "");
         int string_len = ss.length();
-        int len = string_len/2;
-        if(string_len%2 ==1){
-            ss = "0"+ss;
+        int len = string_len / 2;
+        if (string_len % 2 == 1) {
+            ss = "0" + ss;
             string_len++;
             len++;
         }
@@ -383,7 +385,7 @@ public class XUtil {
             for (int i = 0; i < len; i++) {
                 a[i] = (byte) Integer.parseInt(ss.substring(2 * i, 2 * i + 2), 16);
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return null;
         }
         return a;
@@ -448,11 +450,11 @@ public class XUtil {
         return intent;
     }
 
-    public static SpannableString highLightString(String in, String key){
-        if(TextUtils.isEmpty(in))
+    public static SpannableString highLightString(String in, String key) {
+        if (TextUtils.isEmpty(in))
             return new SpannableString("");
         SpannableString s = new SpannableString(in);
-        if(!TextUtils.isEmpty(key)) {
+        if (!TextUtils.isEmpty(key)) {
             Pattern p = Pattern.compile(key);
             Matcher m = p.matcher(s);
             while (m.find()) {
@@ -464,11 +466,11 @@ public class XUtil {
         return s;
     }
 
-    public static SpannableString highLightString(String in, String key, int color){
-        if(TextUtils.isEmpty(in))
+    public static SpannableString highLightString(String in, String key, int color) {
+        if (TextUtils.isEmpty(in))
             return new SpannableString("");
         SpannableString s = new SpannableString(in);
-        if(!TextUtils.isEmpty(key)) {
+        if (!TextUtils.isEmpty(key)) {
             Pattern p = Pattern.compile(key);
             Matcher m = p.matcher(s);
             while (m.find()) {
@@ -480,11 +482,11 @@ public class XUtil {
         return s;
     }
 
-    public static SpannableString translateString(String in, String key){
-        if(TextUtils.isEmpty(in))
+    public static SpannableString translateString(String in, String key) {
+        if (TextUtils.isEmpty(in))
             return new SpannableString("");
         SpannableString s = new SpannableString(in);
-        if(!TextUtils.isEmpty(key)) {
+        if (!TextUtils.isEmpty(key)) {
             Pattern p = Pattern.compile(key);
             Matcher m = p.matcher(s);
             while (m.find()) {
@@ -496,11 +498,11 @@ public class XUtil {
         return s;
     }
 
-    public static SpannableStringSerializable translateStringSerializable(String in, String key){
-        if(TextUtils.isEmpty(in))
+    public static SpannableStringSerializable translateStringSerializable(String in, String key) {
+        if (TextUtils.isEmpty(in))
             return new SpannableStringSerializable("");
         SpannableStringSerializable s = new SpannableStringSerializable(in);
-        if(!TextUtils.isEmpty(key)) {
+        if (!TextUtils.isEmpty(key)) {
             Pattern p = Pattern.compile(key);
             Matcher m = p.matcher(s);
             while (m.find()) {
@@ -517,7 +519,9 @@ public class XUtil {
      * 中文 或ascii 控制字符 转 国际码
      */
     public static String fromUnicodeU(String ua) {
-        if (ua == null) {return null;}
+        if (ua == null) {
+            return null;
+        }
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0, length = ua.length(); i < length; i++) {
             char c = ua.charAt(i);

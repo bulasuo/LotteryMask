@@ -4,9 +4,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * @author   abu
- * 2017/11/7    19:03
- * bulasuo@foxmail.com
+ * @author abu
+ *         2017/11/7    19:03
+ *         bulasuo@foxmail.com
  */
 
 public class XProxyUtil {
@@ -39,7 +39,7 @@ public class XProxyUtil {
                         for (int i = 0; i < fields.length; i++) {
                             if (fieldName.equals((f = fields[i]).getName())) {
                                 o1 = f.get(o);
-                                if (o1 != null){
+                                if (o1 != null) {
                                     return o1;
                                 }
                             }

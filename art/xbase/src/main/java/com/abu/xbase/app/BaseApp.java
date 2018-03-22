@@ -26,6 +26,7 @@ public abstract class BaseApp extends Application {
     private static BaseApp instance;
     private static Handler handler;
     private static RefWatcher refWatcher;
+
     private static RefWatcher getRefWatcher() {
         return refWatcher;
     }
@@ -46,14 +47,15 @@ public abstract class BaseApp extends Application {
     public static String _FILE_PROVIDER_SCHEME_TAG;
 
 
-    public static void watch(Object watchedReference){
-        try{
+    public static void watch(Object watchedReference) {
+        try {
             getRefWatcher().watch(watchedReference);
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
         }
 
     }
+
     public static BaseApp getInstance() {
         return instance;
     }
@@ -73,10 +75,12 @@ public abstract class BaseApp extends Application {
     }
 
     protected abstract boolean isDEBUG();
+
     protected abstract boolean isRELEASE();
+
     protected abstract String getFileProviderSchemeTag();
 
-    private void initApp(){
+    private void initApp() {
         DEBUG = isDEBUG();
         RELEASE = isRELEASE();
         _FILE_PROVIDER_SCHEME_TAG = getFileProviderSchemeTag();
@@ -84,10 +88,10 @@ public abstract class BaseApp extends Application {
         BaseApp app = BaseApp.getInstance();
         RetrofitUtil.init(DEBUG, app, null);
         //崩溃捕获
-        if(RELEASE) {
+        if (RELEASE) {
             CrashHandler.getInstance().init(app);
         }
-        if(DEBUG){
+        if (DEBUG) {
             refWatcher = LeakCanary.install(app);
         }
     }
@@ -103,7 +107,7 @@ public abstract class BaseApp extends Application {
      */
     private boolean shouldInit() {
         ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
-        if(am != null) {
+        if (am != null) {
             List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
             String mainProcessName = getPackageName();
             int myPid = android.os.Process.myPid();
@@ -116,8 +120,8 @@ public abstract class BaseApp extends Application {
         return false;
     }
 
-    public static Handler getMainHandler(){
-        if(handler == null){
+    public static Handler getMainHandler() {
+        if (handler == null) {
             handler = new Handler(Looper.getMainLooper());
         }
         return handler;

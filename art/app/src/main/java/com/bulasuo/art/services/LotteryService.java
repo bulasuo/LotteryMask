@@ -19,5 +19,4 @@ public interface LotteryService {
     @GET("/bonus/getNumberNewBonus.vhtml?lotId=001,002,003,113,110,108,109&format=json")
     Call<BaseResponseBean> applyMainList();
 
-
 }

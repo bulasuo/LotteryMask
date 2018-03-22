@@ -13,6 +13,7 @@ import java.util.HashMap;
  * 如果activity在后台已经onSaveInstanceState,但是做ui更新涉及到FragmentManager会
  * 报异常:java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
  * 而且ui更新在onResume里进行,会减少多个页面ui更新的阻塞
+ *
  * @author abu
  *         2017/11/22    12:51
  *         bulasuo@foxmail.com
@@ -26,12 +27,13 @@ public class BaseResumeTaskFragment extends Fragment {
     protected boolean resume = false;
     private ArrayList<Task> taskList;
     private HashMap<String, Task> taskMap;
-    protected boolean isOnResume(){
+
+    protected boolean isOnResume() {
         return resume && !isHidden();
     }
 
-    private HashMap<String, Task> getTaskMap(){
-        if(taskMap == null)
+    private HashMap<String, Task> getTaskMap() {
+        if (taskMap == null)
             taskMap = new HashMap<>();
         return taskMap;
     }
@@ -40,8 +42,8 @@ public class BaseResumeTaskFragment extends Fragment {
     public void onResume() {
         super.onResume();
         resume = true;
-        if(taskMap != null && taskMap.size() > 0){
-            for(Task task : taskMap.values()){
+        if (taskMap != null && taskMap.size() > 0) {
+            for (Task task : taskMap.values()) {
                 task.apply();
             }
         }
@@ -60,17 +62,17 @@ public class BaseResumeTaskFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public void addTask(String tag, Task task){
-        if(resume){
+    public void addTask(String tag, Task task) {
+        if (resume) {
             task.apply();
             getTaskMap().remove(tag);
-        }else {
+        } else {
             getTaskMap().put(tag, task);
         }
     }
 
-    public void clearTask(){
-        if(taskMap != null){
+    public void clearTask() {
+        if (taskMap != null) {
             taskMap.clear();
             taskMap = null;
         }

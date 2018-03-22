@@ -8,7 +8,7 @@ package com.abu.xbase.config;
 
 public class XConstant {
 
-    public interface ShareP{
+    public interface ShareP {
         /**
          * 是否登录
          */
@@ -53,8 +53,10 @@ public class XConstant {
          */
         String FLOOR_NM = "sp_floor_nm";
 
-        /**用户定位的城市*/
-        String CITY_BEAN =  "sp_city_bean";
+        /**
+         * 用户定位的城市
+         */
+        String CITY_BEAN = "sp_city_bean";
 
         /**
          * 登录权限token
@@ -69,7 +71,7 @@ public class XConstant {
 //        String SP_PUSH_TOKEN = "SP_PUSH_TOKEN";
     }
 
-    public interface EventBus{
+    public interface EventBus {
         /**
          * 用来传递startForResult
          */
@@ -95,7 +97,9 @@ public class XConstant {
 
         int NET_CONNECT_SUCCESS = 6;
 
-        /**时间晶振 1秒*/
+        /**
+         * 时间晶振 1秒
+         */
         int TIME_CRYSTAL_OSCILLATOR = 7;
 
         int ON_TOP_MESSAGE_CHANGE = 8;
@@ -120,7 +124,7 @@ public class XConstant {
 
     }
 
-    public interface RequestCode{
+    public interface RequestCode {
         /**
          * 进入用户信息页面
          */
@@ -164,7 +168,7 @@ public class XConstant {
         int PAGE_COURSE_DETAIL_REQUEST_ACTION_RECHARGE = 16;
     }
 
-    public interface ResultCode{
+    public interface ResultCode {
         /**
          * 登录成功
          */

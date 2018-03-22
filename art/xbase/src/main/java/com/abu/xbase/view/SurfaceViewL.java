@@ -45,11 +45,12 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
      */
     private boolean tryDestroy;
 
-    public static class PathPaintPar{
-        public PathPaintPar(XPath path, Paint paint){
+    public static class PathPaintPar {
+        public PathPaintPar(XPath path, Paint paint) {
             this.path = path;
             this.paint = paint;
         }
+
         public XPath path;
         public Paint paint;
     }
@@ -69,7 +70,8 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
     private XPath mLocalPath, mLastRemotePath;
 
     private boolean shouldDraw;
-    public void tryDraw(){
+
+    public void tryDraw() {
         shouldDraw = true;
     }
 
@@ -102,13 +104,13 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
         this.mClearEndWidth = clearEndWidth;
         this.mScreen_scale = screen_scale;
 
-        float endHelf = mClearEndWidth/2;
+        float endHelf = mClearEndWidth / 2;
         mClearEndPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mClearEndPaint.setAntiAlias(true);
         mClearEndPaint.setStyle(Paint.Style.STROKE);
         mClearEndPaint.setStrokeCap(Paint.Cap.SQUARE);
         mClearEndPaint.setStrokeJoin(Paint.Join.BEVEL);
-        mClearEndPaint.setStrokeWidth(mClearEndWidth+1);
+        mClearEndPaint.setStrokeWidth(mClearEndWidth + 1);
         mClearEndPaint.setDither(true);//消除拉动，使画面圓滑
         mClearEndPaint.setAlpha(0);
         mClearEndPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
@@ -273,16 +275,17 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
 
     /**
      * 不是新颜色 且 上次paint 不为null   返回 null
+     *
      * @param color
      * @return
      */
-    private Paint formNewRemotePaint(String color, int traceMode){
-        if(mLastRemotePaint == null
+    private Paint formNewRemotePaint(String color, int traceMode) {
+        if (mLastRemotePaint == null
                 || traceMode != lastTraceMode
                 || !TextUtils.equals(mLastRemotePaintColor, color)) {
             mLastRemotePaintColor = color;
             lastTraceMode = traceMode;
-            if(traceMode == 0) {//绘制path
+            if (traceMode == 0) {//绘制path
                 Paint remotePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
                 remotePaint.setStrokeWidth(1f * mScreen_scale);
                 remotePaint.setColor(Color.parseColor("#".concat(color.substring(6, 8)).concat(color.substring(0, 6))));
@@ -290,7 +293,7 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
                 remotePaint.setStrokeJoin(Paint.Join.ROUND);
                 remotePaint.setStrokeCap(Paint.Cap.ROUND);
                 mLastRemotePaint = remotePaint;
-            }else if(traceMode == 1){//橡皮擦
+            } else if (traceMode == 1) {//橡皮擦
                 mLastRemotePaint = mClearPaint;
             }
             return mLastRemotePaint;
@@ -328,22 +331,22 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
                 for (int i = 0, j = jsonArray.size(); i < j; i++) {
                     msg = JSONObject.parseObject((String) jsonArray.get(i));
                     String msgType = msg.getString("msgType");
-                    if ("5".equals(msgType)){//试题类消息
-                        if(testPictures == null)
+                    if ("5".equals(msgType)) {//试题类消息
+                        if (testPictures == null)
                             testPictures = new ArrayList<>();
                         testPictures.add(msg);
                         continue;
-                    } else if("3".equals(msgType)) {//笔记类消息
+                    } else if ("3".equals(msgType)) {//笔记类消息
                         content = JSONObject.parseObject(msg.getString("content"));
 //                        if(!TextUtils.equals(content.getString("operatorId"), teacherId)
 //                                && !TextUtils.equals(content.getString("operatorId"), studentId))
 //                            continue;
                         traceId = content.getString("traceId");
                         pathPaintPar = mPaths.get(traceId);
-                        if(pathPaintPar != null){
+                        if (pathPaintPar != null) {
 //                            paint = pathPaintPar.paint;
                             path = pathPaintPar.path;
-                        }else {
+                        } else {
                             traceMode = content.getIntValue("traceMode");
                             formNewRemotePaint(content.getString("color"), traceMode);
                             path = new XPath();
@@ -356,9 +359,9 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
                                 point = points.getJSONObject(ii);
                                 x = point.getFloatValue("x") * localBoardW;
                                 y = point.getFloatValue("y") * localBoardH;
-                                if(pathPaintPar != null){
+                                if (pathPaintPar != null) {
                                     path.quadTo(path.mLastX, path.mLastY, x, y);
-                                }else{
+                                } else {
                                     path.moveTo(x, y);
                                 }
 
@@ -369,7 +372,7 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
                             }
                         }
                         lastTraceId = traceId;
-                        if(i % 300 == 0)
+                        if (i % 300 == 0)
                             shouldDraw = true;
                     }
                 }
@@ -379,7 +382,7 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
             ToastUtil.showException(e);
         }
 
-        ToastUtil.showDebug("onHistoryPaths*********-"+(System.currentTimeMillis() - bulasuoTime1));
+        ToastUtil.showDebug("onHistoryPaths*********-" + (System.currentTimeMillis() - bulasuoTime1));
 
         return testPictures;
     }
@@ -396,15 +399,15 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
         float x;
         float y;
         content = JSONObject.parseObject(jsonStr);
-        if(TextUtils.equals(content.getString("operatorId"), studentId))
+        if (TextUtils.equals(content.getString("operatorId"), studentId))
             return;
         traceId = content.getString("traceId");
 
         pathPaintPar = mPaths.get(traceId);
-        if(pathPaintPar != null){
+        if (pathPaintPar != null) {
 //                            paint = pathPaintPar.paint;
             path = pathPaintPar.path;
-        }else {
+        } else {
             traceMode = content.getIntValue("traceMode");
             formNewRemotePaint(content.getString("color"), traceMode);
             path = new XPath();
@@ -417,9 +420,9 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
                 point = points.getJSONObject(ii);
                 x = point.getFloatValue("x") * localBoardW;
                 y = point.getFloatValue("y") * localBoardH;
-                if(pathPaintPar != null){
+                if (pathPaintPar != null) {
                     path.quadTo(path.mLastX, path.mLastY, x, y);
-                }else{
+                } else {
                     path.moveTo(x, y);
                 }
 
@@ -440,6 +443,7 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
 
 
     private boolean shouldClearScreen;
+
     /**
      * 绘制
      */
@@ -451,18 +455,18 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
             mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 //            mCanvas.drawColor(0xFFF5F5F5);
 
-            if(shouldClearScreen){
+            if (shouldClearScreen) {
                 mPaths.clear();
                 mLastRemotePaintColor = null;
                 shouldClearScreen = false;
-            }else {
+            } else {
                 Iterator<PathPaintPar> it = mPaths.values().iterator();
                 PathPaintPar pathPaintPar;
                 while (it.hasNext()) {
                     pathPaintPar = it.next();
                     mCanvas.drawPath(pathPaintPar.path, pathPaintPar.paint);
                 }
-                if(mClearEnd){
+                if (mClearEnd) {
                     mCanvas.drawPath(mClearEndPath, mClearEndPaint);
                 }
             }
@@ -479,14 +483,15 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
     }
 
     private boolean mClearEnd;
-    public void onClearEnd(boolean clearEnd){
-        if(mClearEnd != clearEnd) {
+
+    public void onClearEnd(boolean clearEnd) {
+        if (mClearEnd != clearEnd) {
             mClearEnd = clearEnd;
             shouldDraw = true;
         }
     }
 
-    private String localTraceId ;
+    private String localTraceId;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -503,7 +508,7 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
                 localTraceId = String.valueOf(System.currentTimeMillis());
                 mPaths.put(localTraceId, new PathPaintPar(mLocalPath, mLocalPaint));
                 mLocalPath.moveTo(mLastX, mLastY);
-                sendReomtePoint(true, localTraceId, x/localBoardW, y/localBoardH);
+                sendReomtePoint(true, localTraceId, x / localBoardW, y / localBoardH);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float dx = Math.abs(x - mLastX);
@@ -513,7 +518,7 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
                     shouldDraw = true;
                     mLastX = x;
                     mLastY = y;
-                    sendReomtePoint(false, localTraceId, x/localBoardW, y/localBoardH);
+                    sendReomtePoint(false, localTraceId, x / localBoardW, y / localBoardH);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -524,8 +529,8 @@ public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback,
         return true;
     }
 
-    private void sendReomtePoint(boolean isStartPoint, String traceId, float x, float y){
-        if(rwSocket != null) {
+    private void sendReomtePoint(boolean isStartPoint, String traceId, float x, float y) {
+        if (rwSocket != null) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("messageId", UUID.randomUUID());
             jsonObject.put("operatorId", studentId);

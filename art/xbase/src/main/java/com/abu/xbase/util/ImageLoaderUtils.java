@@ -12,9 +12,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 /**
- * @author   abu
- * 2018/2/5    9:09
- * bulasuo@foxmail.com
+ * @author abu
+ *         2018/2/5    9:09
+ *         bulasuo@foxmail.com
  */
 
 public class ImageLoaderUtils {
@@ -66,14 +66,18 @@ public class ImageLoaderUtils {
                         @Override
                         public void onResourceReady(final GlideDrawable resource, GlideAnimation<? super
                                 GlideDrawable> glideAnimation) {
-                            if (imageView == null) {return;}
+                            if (imageView == null) {
+                                return;
+                            }
                             imageView.post(() -> imageView.setImageDrawable(resource));
                         }
 
                         @Override
                         public void onLoadFailed(Exception e, Drawable errorDrawable) {
                             super.onLoadFailed(e, errorDrawable);
-                            if (imageView == null) {return;}
+                            if (imageView == null) {
+                                return;
+                            }
                             imageView.setImageDrawable(errorDrawable);
                         }
                     });
@@ -100,14 +104,18 @@ public class ImageLoaderUtils {
                         @Override
                         public void onResourceReady(final GlideDrawable resource, GlideAnimation<? super
                                 GlideDrawable> glideAnimation) {
-                            if (imageView == null) {return;}
+                            if (imageView == null) {
+                                return;
+                            }
                             imageView.post(() -> imageView.setImageDrawable(resource));
                         }
 
                         @Override
                         public void onLoadFailed(Exception e, Drawable errorDrawable) {
                             super.onLoadFailed(e, errorDrawable);
-                            if (imageView == null) {return;}
+                            if (imageView == null) {
+                                return;
+                            }
                             imageView.setImageDrawable(errorDrawable);
                         }
                     });
@@ -125,14 +133,18 @@ public class ImageLoaderUtils {
                         @Override
                         public void onResourceReady(final GlideDrawable resource, GlideAnimation<? super
                                 GlideDrawable> glideAnimation) {
-                            if (imageView == null) {return;}
+                            if (imageView == null) {
+                                return;
+                            }
                             imageView.post(() -> imageView.setImageDrawable(resource));
                         }
 
                         @Override
                         public void onLoadFailed(Exception e, Drawable errorDrawable) {
                             super.onLoadFailed(e, errorDrawable);
-                            if (imageView == null) {return;}
+                            if (imageView == null) {
+                                return;
+                            }
                             imageView.setImageDrawable(errorDrawable);
                         }
                     });

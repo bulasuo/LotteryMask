@@ -19,7 +19,7 @@ import java.io.File;
  *         bulasuo@foxmail.com
  */
 
-public abstract class BaseTakePhotoActivity extends BasePermissionActivity{
+public abstract class BaseTakePhotoActivity extends BasePermissionActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -55,13 +55,13 @@ public abstract class BaseTakePhotoActivity extends BasePermissionActivity{
                 break;
             //裁剪返回
             case XConstant.RequestCode.REQUEST_CAMERA_CROP:
-                if (resultCode == -1){
+                if (resultCode == -1) {
                     Uri uri = data.getData() == null ? XFileUtil.resultUriTemp : data.getData();
                     Message msg = obtainMessage(XConstant.EventBus.REQUEST_TO_RESULT);
                     msg.arg1 = XConstant.RequestCode.FRAGMENT_USER_INFO_FOR_PICK;
                     msg.obj = uri;
                     EventBus.getDefault().post(msg);
-                }else if (resultCode == 0) {
+                } else if (resultCode == 0) {
                     XFileUtil.deleteFile(XFileUtil.uriTemp);
                 }
                 break;

@@ -7,9 +7,9 @@ import com.abu.xbase.app.BaseApp;
 
 
 /**
- * @author   abu
- * 2017/11/7    19:03
- * bulasuo@foxmail.com
+ * @author abu
+ *         2017/11/7    19:03
+ *         bulasuo@foxmail.com
  */
 
 @UiThread
@@ -20,9 +20,9 @@ public class ToastUtil {
         if (!DEBUG) {
             return;
         }
-        if(e == null)
+        if (e == null)
             return;
-        if(!XUtil.isUIThread())
+        if (!XUtil.isUIThread())
             return;
         try {
             final Toast toast = Toast.makeText(BaseApp.getInstance()
@@ -40,7 +40,7 @@ public class ToastUtil {
             return;
         }
         try {
-            System.out.println(Thread.currentThread().getId()+"-showDEBUG:::" + msg);
+            System.out.println(Thread.currentThread().getId() + "-showDEBUG:::" + msg);
         } catch (Exception e) {
             showException(e);
         }

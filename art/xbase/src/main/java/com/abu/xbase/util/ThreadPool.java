@@ -16,9 +16,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ThreadPool {
     private static ExecutorService executorService;
     private static final int MAXIMUM_POOL_SIZE = Integer.MAX_VALUE;
-    /**核心保活线程数即最大正在运行数*/
+    /**
+     * 核心保活线程数即最大正在运行数
+     */
     private static final int CORE_POOL_SIZE = 10;
-
 
 
     private static final ThreadFactory sThreadFactory = new ThreadFactory() {
@@ -30,8 +31,8 @@ public class ThreadPool {
         }
     };
 
-    public static ExecutorService getPool(){
-        if(executorService == null){
+    public static ExecutorService getPool() {
+        if (executorService == null) {
             executorService = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE,
                     1000L, TimeUnit.MILLISECONDS,
                     new LinkedBlockingQueue<>(), sThreadFactory);

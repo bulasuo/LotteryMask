@@ -49,7 +49,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 获取CrashHandler实例 ,单例模式
      */
     public static CrashHandler getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new CrashHandler();
         }
         return instance;
@@ -73,7 +73,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     public void uncaughtException(final Thread thread, final Throwable ex) {
         //收集错误日志并且保存在本地
         collectDeviceInfo(mContext);
-        ToastUtil.showDebug("CrashHandler::\n"+infos.toString());
+        ToastUtil.showDebug("CrashHandler::\n" + infos.toString());
         restartApp(mContext);
         //让系统默认的异常处理器来处理-以及退出app
         mDefaultHandler.uncaughtException(thread, ex);

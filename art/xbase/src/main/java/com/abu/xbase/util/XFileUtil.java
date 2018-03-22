@@ -20,9 +20,9 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * @author   abu
- * 2017/11/7    18:57
- * bulasuo@foxmail.com
+ * @author abu
+ *         2017/11/7    18:57
+ *         bulasuo@foxmail.com
  */
 public class XFileUtil {
     private final static String IMG = "img";
@@ -38,7 +38,7 @@ public class XFileUtil {
     private static Context appContext;
 
     public static Context getAppContext() {
-        if (appContext == null){
+        if (appContext == null) {
             appContext = BaseApp.getInstance();
         }
         return appContext;
@@ -54,7 +54,7 @@ public class XFileUtil {
     private static FileProvider fileProvider;
 
     public static FileProvider getFileProvider() {
-        if (fileProvider == null){
+        if (fileProvider == null) {
             fileProvider = new FileProvider();
         }
         return fileProvider;
@@ -148,7 +148,7 @@ public class XFileUtil {
      */
     public static boolean copyUri2File(Uri uri, File file) {
         boolean success = false;
-        if (uri == null || file == null){
+        if (uri == null || file == null) {
             throw new IllegalArgumentException(" -- ");
         }
         ParcelFileDescriptor pfd = null;
@@ -175,7 +175,7 @@ public class XFileUtil {
         } finally {
             try {
                 is.close();
-                if (os != null){
+                if (os != null) {
                     os.close();
                 }
             } catch (IOException e) {
@@ -229,7 +229,7 @@ public class XFileUtil {
         try {
             final Object obj = XProxyUtil.invoke(getFileProvider(), "getPathStrategy",
                     new Class[]{Context.class, String.class}, new Object[]{getAppContext(), SCHEME_TAG});
-            if (obj != null){
+            if (obj != null) {
                 file = (File) XProxyUtil.invoke(obj, "getFileForUri", new Class[]{Uri.class}, new Object[]{uri});
             }
         } catch (Exception e) {
@@ -254,7 +254,7 @@ public class XFileUtil {
         }
         final File f = uri2File(uri);
         try {
-            if (f != null){
+            if (f != null) {
                 uPath = f.getCanonicalPath();
             }
         } catch (IOException e) {
@@ -265,9 +265,13 @@ public class XFileUtil {
 
     public static void deleteFile(Uri uri) {
         String p = uri2Path(uri);
-        if (p == null || p.trim().length() == 0){ return;}
+        if (p == null || p.trim().length() == 0) {
+            return;
+        }
         final File file = new File(p);
-        if (file.exists()){file.delete();}
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     public static void deleteFile(File file) {
@@ -286,8 +290,8 @@ public class XFileUtil {
         }
     }
 
-    public static void deleteFileWithDelay (File file){
-        if (null!=file&&file.exists()) {
+    public static void deleteFileWithDelay(File file) {
+        if (null != file && file.exists()) {
             file.delete();
             SystemClock.sleep(50);
         }

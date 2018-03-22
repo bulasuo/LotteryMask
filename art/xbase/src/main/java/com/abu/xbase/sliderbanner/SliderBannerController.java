@@ -20,7 +20,7 @@ public class SliderBannerController<T> {
     private DotView mDotView;
     private ViewBinder mViewBinder;
 
-    public interface ViewBinder<T>{
+    public interface ViewBinder<T> {
         View onBindItemView(LayoutInflater layoutInflater, int position, T data);
     }
 
@@ -65,7 +65,8 @@ public class SliderBannerController<T> {
         @Override
         public View getView(LayoutInflater layoutInflater, int position) {
             position = getPositionForIndicator(position);
-            if(mViewBinder != null) return mViewBinder.onBindItemView(layoutInflater, position, getItem(position));
+            if (mViewBinder != null)
+                return mViewBinder.onBindItemView(layoutInflater, position, getItem(position));
             return null;
         }
 
