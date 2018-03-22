@@ -19,17 +19,17 @@ public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
 
     private List<T> mOldDatas, mNewDatas;
 
-    public DiffUtil.DiffResult getDiff(List<T> mOldDatas, List<T> mNewDatas, boolean detectMoves){
+    public DiffUtil.DiffResult getDiff(List<T> mOldDatas, List<T> mNewDatas, boolean detectMoves) {
         this.mOldDatas = mOldDatas;
         this.mNewDatas = mNewDatas;
         return DiffUtil.calculateDiff(this, detectMoves);
     }
 
     public boolean dispatchUpdates(boolean loadMore, RecyclerView.Adapter adapter,
-                                   List<T> mOldDatas, List<T> mNewDatas, boolean detectMoves){
-        if(loadMore)
+                                   List<T> mOldDatas, List<T> mNewDatas, boolean detectMoves) {
+        if (loadMore)
             mNewDatas.addAll(0, mOldDatas);
-        if(!mOldDatas.equals(mNewDatas)){
+        if (!mOldDatas.equals(mNewDatas)) {
             DiffUtil.DiffResult diffResult = getDiff(mOldDatas, mNewDatas, detectMoves);
             mOldDatas.clear();
             mOldDatas.addAll(mNewDatas);
@@ -51,10 +51,11 @@ public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
 
     /**
      * 是不是同一个item 看bean.id
+     *
      * @param oldItemPosition
      * @param newItemPosition
      * @return {return mOldDatas.get(oldItemPosition).id
-                    == mNewDatas.get(newItemPosition).id;}
+     * == mNewDatas.get(newItemPosition).id;}
      */
     @Override
     public abstract boolean areItemsTheSame(int oldItemPosition, int newItemPosition);
@@ -74,7 +75,7 @@ public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
     @Override
     @Nullable
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        ToastUtil.showDebug("getChangePayload:::xx"+oldItemPosition+"-"+newItemPosition);
+        ToastUtil.showDebug("getChangePayload:::xx" + oldItemPosition + "-" + newItemPosition);
         return null;
     }
 }
