@@ -17,6 +17,7 @@ import retrofit2.Response;
  */
 
 public class BaseResponseBean {
+
     public ArrayList<LotteryBean> numberList;
     public String result, desc;
 

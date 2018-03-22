@@ -9,6 +9,7 @@ import com.abu.xbase.util.XUtil;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -87,9 +88,19 @@ public class ExampleUnitTest {
             this.v2 = v2;
         }
     }
-
+    private static final SimpleDateFormat formatIn =
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private static final SimpleDateFormat formatOut =
+            new SimpleDateFormat("MM-dd EEEE", Locale.getDefault());
     @Test
     public void addition_isCorrect() throws Exception {
+        if(true){
+            System.out.println("--"+"1,".split(",").length);
+            String str0 = "%5.2f";
+            System.out.println(String.format(Locale.getDefault(), str0, 6.111));
+            System.out.println("--"+formatOut.format(formatIn.parse("2018-03-20 21:15:00.0")));
+            return;
+        }
         if(true){
 
             System.out.println("1519666100552".length());
