@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 
-import com.abu.xbase.util.ToastUtil;
 import com.abu.xbase.util.XUtil;
 
 import java.util.List;
@@ -59,23 +58,27 @@ public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
      */
     @Override
     public abstract boolean areItemsTheSame(int oldItemPosition, int newItemPosition);
-    /*{
-        *//*return mOldDatas.get(oldItemPosition).course_id
-                == mNewDatas.get(newItemPosition).course_id;*//*
-        return false;
-    }*/
 
-    //同一个id的item 是不是内容相同
+    /**
+     * 同一个id的item 是不是内容相同
+     * @param oldItemPosition
+     * @param newItemPosition
+     * @return
+     */
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         return XUtil.equals(mOldDatas.get(oldItemPosition), mNewDatas.get(newItemPosition));
     }
 
-    //该方法在DiffUtil高级用法中用到 ，暂且不提
+    /**
+     * 该方法在DiffUtil高级用法中用到 ，暂且不提
+     * @param oldItemPosition
+     * @param newItemPosition
+     * @return
+     */
     @Override
     @Nullable
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        ToastUtil.showDebug("getChangePayload:::xx" + oldItemPosition + "-" + newItemPosition);
         return null;
     }
 }
