@@ -24,6 +24,14 @@ public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
         return DiffUtil.calculateDiff(this, detectMoves);
     }
 
+    /**
+     * @param loadMore    true:上拉加载  false:刷新
+     * @param adapter
+     * @param mOldDatas   原view显示的datas
+     * @param mNewDatas   新加载到的datas
+     * @param detectMoves
+     * @return
+     */
     public boolean dispatchUpdates(boolean loadMore, RecyclerView.Adapter adapter,
                                    List<T> mOldDatas, List<T> mNewDatas, boolean detectMoves) {
         if (loadMore)
