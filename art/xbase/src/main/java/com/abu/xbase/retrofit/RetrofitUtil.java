@@ -32,6 +32,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -105,7 +106,8 @@ public class RetrofitUtil {
      */
     @Deprecated
     public static Retrofit getDefaultRetrofit(String host) {
-        if (defaultRetrofit == null) {
+        if (defaultRetrofit == null
+                || !XUtil.equals(gsonRetrofit.baseUrl(), HttpUrl.parse(host))) {
             defaultRetrofit = new Retrofit.Builder()
                     .baseUrl(host)
                     .client(getDefaultClient())
@@ -123,7 +125,8 @@ public class RetrofitUtil {
     }
 
     public static Retrofit getGsonRetrofit(String host) {
-        if (gsonRetrofit == null) {
+        if (gsonRetrofit == null
+                || !XUtil.equals(gsonRetrofit.baseUrl(), HttpUrl.parse(host))) {
             Gson gson = new GsonBuilder()
                     //配置你的Gson 可自定义Gson
                     .setDateFormat("yyyy-MM-dd hh:mm:ss")
