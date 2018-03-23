@@ -2,7 +2,6 @@ package com.bulasuo.art.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,14 +10,11 @@ import android.widget.TextView;
 import com.abu.xbase.fragment.BaseFragment;
 import com.abu.xbase.retrofit.RetrofitUtil;
 import com.abu.xbase.util.ToastUtil;
-import com.abu.xbase.util.XViewUtil;
 import com.bulasuo.art.R;
 import com.bulasuo.art.bean.BaseResponseBeanData;
 import com.bulasuo.art.bean.LotteryBean;
 import com.bulasuo.art.services.AppAPI;
 import com.bulasuo.art.services.LotteryService;
-
-import org.greenrobot.greendao.annotation.NotNull;
 
 import java.util.ArrayList;
 
@@ -170,30 +166,6 @@ public class LotteryFragment extends BaseFragment {
                         dealFailure(call, t);
                     }
                 });
-    }
-
-
-    private void updatePoints(@NotNull LinearLayout linearLayout,
-                              String[] baseCodes, String[] specCodes) {
-        try {
-            TextView textView;
-            for (int i = 0, j = linearLayout.getChildCount(); i < j; i++) {
-                textView = (TextView) linearLayout.getChildAt(i);
-                if (i < baseCodes.length) {
-                    textView.setText(baseCodes[i]);
-                    textView.setBackgroundResource(R.drawable.ic_circle_bg);
-                    XViewUtil.visvable(textView, View.VISIBLE);
-                } else if (i < baseCodes.length + specCodes.length) {
-                    textView.setText(specCodes[i - baseCodes.length]);
-                    textView.setBackgroundResource(R.drawable.ic_circle_red_bg);
-                    XViewUtil.visvable(textView, View.VISIBLE);
-                } else {
-                    XViewUtil.visvable(textView, View.INVISIBLE);
-                }
-            }
-        } catch (Exception e) {
-            ToastUtil.showException(e);
-        }
     }
 
     private void updateView(ArrayList<LotteryBean> numberList) {
