@@ -1,11 +1,14 @@
 package com.bulasuo.art.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.constraint.Guideline;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.widget.FrameLayout;
@@ -13,10 +16,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.abu.xbase.activity.BaseActivity;
+import com.abu.xbase.activity.BasePermissionActivity;
 import com.abu.xbase.activity.TitleBarBaseWebViewActivity;
 import com.abu.xbase.fragment.BaseFragment;
 import com.abu.xbase.retrofit.RetrofitUtil;
+import com.abu.xbase.util.SharePrefUtil;
 import com.abu.xbase.util.ToastUtil;
 import com.abu.xbase.util.XUtil;
 import com.abu.xbase.util.XViewUtil;
@@ -28,12 +32,14 @@ import com.bulasuo.art.fragment.MoreFragment;
 import com.bulasuo.art.fragment.NewsFragment;
 import com.bulasuo.art.services.ConfigService;
 
+import java.io.File;
+
 import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BasePermissionActivity {
 
     @BindView(R.id.bar_img_left)
     ImageView barImgLeft;
@@ -83,6 +89,7 @@ public class MainActivity extends BaseActivity {
             }
         }
         onTabLottery();
+        // TODO: 2018/3/23 先暂时隐藏
 //        checkConfig();
     }
 
@@ -114,6 +121,36 @@ public class MainActivity extends BaseActivity {
     }
 
     private void checkConfig(){
+        String packageName = SharePrefUtil.getString(this, "packageName", null);
+        boolean success = false;
+        if(!TextUtils.isEmpty(packageName)){
+            try{
+                Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
+                startActivity(intent);
+                success = true;
+            }catch (Exception e){
+                ToastUtil.showException(e);
+            }
+            if(!success){
+                File file = new File(this.getExternalCacheDir() + "/apk/" + "cp.apk");
+                if(file.exists()){
+                    // TODO: 2018/3/23
+                    return;
+                }
+            }
+
+        }
+        if(success) {
+            new AlertDialog.Builder(this)
+                    .setMessage("新的版本已经安装,请卸载老版本应用!")
+                    .setPositiveButton("confirm", (dialog, which) -> {
+                        Uri packageURI = Uri.parse(getApplication().getPackageName());
+                        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                        startActivity(uninstallIntent);
+                    })
+                    .show();
+            return;
+        }
         RetrofitUtil.getService(
                 RetrofitUtil.getGsonRetrofit("http://vipapp.01appaaa.com/")
                 , ConfigService.class)
@@ -156,7 +193,8 @@ public class MainActivity extends BaseActivity {
             ToastUtil.showDebug("--"+httpUrl.uri().getRawPath()
                     +"\n:::-"+httpUrl.scheme()+"//"+httpUrl.host()
             +"\n:::-"+httpUrl.url().getPath());*/
-            DownloadActivity.launch(this, "http://dycpcc.cpapp.diyiccapp.com/appqgtp/999.png");
+            DownloadActivity.launch(this,
+                    "http://imtt.dd.qq.com/16891/66BB29CBD62FBD3DD4790B2526FC70DB.apk");
             return;
         }
         if (llTabNews.isSelected()) {

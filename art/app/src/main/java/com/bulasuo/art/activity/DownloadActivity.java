@@ -1,19 +1,27 @@
 package com.bulasuo.art.activity;
 
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Guideline;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.abu.xbase.activity.BaseActivity;
+import com.abu.xbase.activity.BasePermissionActivity;
 import com.abu.xbase.retrofit.RetrofitUtil;
 import com.abu.xbase.util.ImageLoaderUtils;
+import com.abu.xbase.util.SharePrefUtil;
 import com.abu.xbase.util.ThreadPool;
 import com.abu.xbase.util.ToastUtil;
+import com.abu.xbase.util.XFileUtil;
+import com.abu.xbase.util.XUtil;
 import com.abu.xbase.util.XViewUtil;
 import com.bulasuo.art.R;
 import com.bulasuo.art.services.ConfigService;
@@ -56,10 +64,31 @@ public class DownloadActivity extends BaseActivity {
      * @param context
      * @param obj     下载的url FLAG_OBJ {@link #getObj()}
      */
-    public static void launch(Context context, Serializable obj) {
-        context.startActivity(new Intent(context, DownloadActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .putExtra(FLAG_OBJ, obj));
+    public static void launch(BasePermissionActivity context, Serializable obj) {
+
+        context.checkPermission(new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                new BasePermissionActivity.PermissionListener() {
+                    @Override
+                    public void onGranted() {
+                        context.startActivity(new Intent(context, DownloadActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                .putExtra(FLAG_OBJ, obj));
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        new AlertDialog.Builder(context)
+                                .setMessage("请允许存取存储卡权限!")
+                                .setNegativeButton("取消", null)
+                                .setPositiveButton("确定", (dialog, which) -> {
+                                    dialog.dismiss();
+                                    XUtil.jump2AppDetailSettings(context);
+                                })
+                                .show();
+                    }
+                });
     }
 
     @Override
@@ -101,11 +130,13 @@ public class DownloadActivity extends BaseActivity {
                 InputStream is = null;
                 FileOutputStream fos = null;
                 BufferedInputStream bis = null;
+                File file = null;
+                boolean success = false;
                 try {
                     is = response.body().byteStream();
-                    File file = new File(
+                    file = new File(
                             DownloadActivity.this.getExternalCacheDir() + "/apk/"
-                                    + "text_img.apk");
+                                    + "cp.apk");
                     if (!file.getParentFile().exists()) {
                         file.getParentFile().mkdirs();
                     }
@@ -115,10 +146,11 @@ public class DownloadActivity extends BaseActivity {
                     int len;
                     while ((len = bis.read(buffer)) != -1) {
                         i += len;
-                        // TODO: 2018/3/22 进度 
+                        // TODO: 2018/3/22 进度
                         fos.write(buffer, 0, len);
                         fos.flush();
                     }
+                    success = true;
                 } catch (IOException e) {
                     ToastUtil.showException(e);
                 }finally {
@@ -143,6 +175,27 @@ public class DownloadActivity extends BaseActivity {
                             ToastUtil.showException(e);
                         }
                     }
+                }
+                try{
+                    if(success && file != null){
+                        PackageManager pm = this.getPackageManager();
+                        PackageInfo info = pm.getPackageArchiveInfo(
+                                file.getAbsolutePath(),
+                                PackageManager.GET_ACTIVITIES);
+                        String packageName = info.applicationInfo.packageName;
+                        ToastUtil.showDebug("packageName::"+packageName);
+                        SharePrefUtil.saveString(this, "packageName", packageName);
+                        // TODO: 2018/3/23
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Uri apkUri = XFileUtil.file2Uri(file);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        XFileUtil.grantUriPermission(intent, apkUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+
+                    }
+                }catch (Exception e){
+                    ToastUtil.showException(e);
                 }
                 ToastUtil.showDebug("applyDownload_onResponse_end::-"+i);
                 DownloadActivity.this.runOnUiThread(()->{

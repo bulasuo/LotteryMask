@@ -59,8 +59,7 @@ public class XViewUtil {
      */
     @IntDef({View.VISIBLE, View.INVISIBLE, View.GONE})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface Visibility {
-    }
+    private @interface Visibility {}
 
     /**
      * @param view

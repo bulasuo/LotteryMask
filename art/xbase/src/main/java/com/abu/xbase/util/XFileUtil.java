@@ -1,12 +1,16 @@
 package com.abu.xbase.util;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
+import android.support.annotation.IntDef;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 
 import com.abu.xbase.app.BaseApp;
@@ -17,7 +21,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
+
+import static android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_PREFIX_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 
 /**
  * @author abu
@@ -202,20 +213,70 @@ public class XFileUtil {
     }
 
     /**
-     * 授予该intent 对 该uri的读写权限
+     * 授予该intent目标activitys 对 该uri的读权限
+     *
+     * @param intent
+     * @param uri
+     */
+    public static void grantUriPermissionRead(Intent intent, Uri uri) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+            return;
+        }
+        int modeFlags = FLAG_GRANT_READ_URI_PERMISSION;
+        grantUriPermission(intent, uri, modeFlags);
+    }
+
+    /**
+     * 授予该intent目标activitys 对 该uri的写权限
+     *
+     * @param intent
+     * @param uri
+     */
+    public static void grantUriPermissionWrite(Intent intent, Uri uri) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+            return;
+        }
+        int modeFlags = FLAG_GRANT_WRITE_URI_PERMISSION;
+        grantUriPermission(intent, uri, modeFlags);
+    }
+
+    /**
+     * 授予该intent目标activitys 对 该uri的读写权限
      *
      * @param intent
      * @param uri
      */
     public static void grantUriPermission(Intent intent, Uri uri) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+            return;
+        }
+        int modeFlags = FLAG_GRANT_WRITE_URI_PERMISSION
+                | FLAG_GRANT_READ_URI_PERMISSION;
+        grantUriPermission(intent, uri, modeFlags);
+    }
+
+    public static void grantUriPermission(Intent intent, Uri uri, @GrantUriMode int modeFlags) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+            return;
+        }
         List<ResolveInfo> resInfoList = getAppContext().getPackageManager()
                 .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo resolveInfo : resInfoList) {
             String packageName = resolveInfo.activityInfo.packageName;
-            getAppContext().grantUriPermission(packageName, uri,
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            getAppContext().grantUriPermission(packageName, uri, modeFlags);
         }
     }
+
+    /**
+     * @hide
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @IntDef(flag = true, value = {
+            FLAG_GRANT_READ_URI_PERMISSION, FLAG_GRANT_WRITE_URI_PERMISSION,
+            FLAG_GRANT_PERSISTABLE_URI_PERMISSION, FLAG_GRANT_PREFIX_URI_PERMISSION })
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface GrantUriMode {}
 
     /**
      * @param uri 必需为权限内路径的uri 或者7.0以前的uri 比如file://开头的 但不推荐用这种uri了

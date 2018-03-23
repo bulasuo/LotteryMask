@@ -1,6 +1,5 @@
 package com.abu.xbase.util;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -16,7 +15,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -331,20 +329,8 @@ public class XUtil {
         return null;
     }
 
-    @SuppressLint("HardwareIds")
-    public static String getAndroidID() {
-        String id = null;
-        try {
-            id = Settings.Secure.getString(BaseApp.getInstance()
-                    .getContentResolver(), Settings.Secure.ANDROID_ID);
-        } catch (Exception e) {
-            ToastUtil.showException(e);
-        }
-        return id;
-    }
-
     /**
-     * MD5加密
+     * MD5值计算
      *
      * @param data 明文字节数组
      * @return 16进制密文
@@ -392,7 +378,7 @@ public class XUtil {
     }
 
     /**
-     * MD5加密
+     * MD5值计算
      *
      * @param data 明文字节数组
      * @return 密文字节数组
