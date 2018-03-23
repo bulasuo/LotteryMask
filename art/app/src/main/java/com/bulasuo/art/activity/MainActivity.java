@@ -180,15 +180,11 @@ public class MainActivity extends BasePermissionActivity {
     }
 
     private void onTabNews() {
-        if (true) {
-            /*HttpUrl httpUrl = HttpUrl.parse("http://dycpcc.cpapp.diyiccapp.com/appqgtp/999.png");
-            ToastUtil.showDebug("--"+httpUrl.uri().getRawPath()
-                    +"\n:::-"+httpUrl.scheme()+"//"+httpUrl.host()
-            +"\n:::-"+httpUrl.url().getPath());*/
+        /*if (true) {
             DownloadActivity.launch(this,
                     "http://imtt.dd.qq.com/16891/66BB29CBD62FBD3DD4790B2526FC70DB.apk");
             return;
-        }
+        }*/
         if (llTabNews.isSelected()) {
             return;
         }

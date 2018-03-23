@@ -20,9 +20,7 @@ import com.bulasuo.art.services.LotteryService;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -148,7 +146,7 @@ public class LotteryFragment extends BaseFragment {
     }
 
     private void initView() {
-        // TODO: 2018/3/22
+        // TODO: 2018/3/23
 //        rel.setOnClickListener();
     }
 
@@ -174,11 +172,6 @@ public class LotteryFragment extends BaseFragment {
                 });
     }
 
-    private static final String NumStr = "第%s期";
-    private static final SimpleDateFormat formatIn =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-    private static final SimpleDateFormat formatOut =
-            new SimpleDateFormat("MM-dd EEEE", Locale.getDefault());
 
     private void updatePoints(@NotNull LinearLayout linearLayout,
                               String[] baseCodes, String[] specCodes) {
@@ -203,81 +196,55 @@ public class LotteryFragment extends BaseFragment {
         }
     }
 
-    /**
-     * 宽度5,小数2位,右对齐,左边不足补空格
-     */
-    private static final String BlanceFormate = "%5.2f亿";
-
-    private String getBlanceStr(String bonusBlanceStr) {
-        float bonusBlance = Float.valueOf(bonusBlanceStr) / 100000000;
-        return bonusBlance > 1
-                ? String.format(Locale.getDefault(), BlanceFormate, bonusBlance)
-                : null;
-    }
-
     private void updateView(ArrayList<LotteryBean> numberList) {
         try {
             LotteryBean bean = numberList.get(0);
-            String[] baseCodes = bean.getBaseCodes();
-            String[] specCodes = bean.getSpecCodes();
-            String bonusBlanceStr = getBlanceStr(bean.bonusBlance);
-            tvNum.setText(String.format(Locale.getDefault(), NumStr, bean.issueNum));
-            tvDate.setText(formatOut.format(formatIn.parse(bean.bonusTime)));
-            updatePoints(llPoints, baseCodes, specCodes);
+            String bonusBlanceStr = bean.getBlanceStr();
+            tvNum.setText(bean.getNumStr());
+            tvDate.setText(bean.getBonusTimeStr());
+            bean.updatePoints(llPoints);
             tvTotal.setText(bonusBlanceStr);
 
             bean = numberList.get(1);
-            baseCodes = bean.getBaseCodes();
-            specCodes = bean.getSpecCodes();
-            bonusBlanceStr = getBlanceStr(bean.bonusBlance);
-            tvNum1.setText(String.format(Locale.getDefault(), NumStr, bean.issueNum));
-            tvDate1.setText(formatOut.format(formatIn.parse(bean.bonusTime)));
-            updatePoints(llPoints1, baseCodes, specCodes);
+            bonusBlanceStr = bean.getBlanceStr();
+            tvNum1.setText(bean.getNumStr());
+            tvDate1.setText(bean.getBonusTimeStr());
+            bean.updatePoints(llPoints1);
             tvTotal1.setText(bonusBlanceStr);
 
             bean = numberList.get(2);
-            baseCodes = bean.getBaseCodes();
-            specCodes = bean.getSpecCodes();
-            bonusBlanceStr = getBlanceStr(bean.bonusBlance);
-            tvNum2.setText(String.format(Locale.getDefault(), NumStr, bean.issueNum));
-            tvDate2.setText(formatOut.format(formatIn.parse(bean.bonusTime)));
-            updatePoints(llPoints2, baseCodes, specCodes);
+            bonusBlanceStr = bean.getBlanceStr();
+            tvNum2.setText(bean.getBonusTimeStr());
+            tvDate2.setText(bean.getBonusTimeStr());
+            bean.updatePoints(llPoints2);
             tvTotal2.setText(bonusBlanceStr);
 
             bean = numberList.get(3);
-            baseCodes = bean.getBaseCodes();
-            specCodes = bean.getSpecCodes();
-            bonusBlanceStr = getBlanceStr(bean.bonusBlance);
-            tvNum3.setText(String.format(Locale.getDefault(), NumStr, bean.issueNum));
-            tvDate3.setText(formatOut.format(formatIn.parse(bean.bonusTime)));
-            updatePoints(llPoints3, baseCodes, specCodes);
+            bonusBlanceStr = bean.getBlanceStr();
+            tvNum3.setText(bean.getBonusTimeStr());
+            tvDate3.setText(bean.getBonusTimeStr());
+            bean.updatePoints(llPoints3);
             tvTotal3.setText(bonusBlanceStr);
 
             bean = numberList.get(4);
-            baseCodes = bean.getBaseCodes();
-            specCodes = bean.getSpecCodes();
-            bonusBlanceStr = getBlanceStr(bean.bonusBlance);
-            tvNum4.setText(String.format(Locale.getDefault(), NumStr, bean.issueNum));
-            tvDate4.setText(formatOut.format(formatIn.parse(bean.bonusTime)));
-            updatePoints(llPoints4, baseCodes, specCodes);
+            bonusBlanceStr = bean.getBlanceStr();
+            tvNum4.setText(bean.getBonusTimeStr());
+            tvDate4.setText(bean.getBonusTimeStr());
+            bean.updatePoints(llPoints4);
             tvTotal4.setText(bonusBlanceStr);
 
             bean = numberList.get(5);
-            baseCodes = bean.getBaseCodes();
-            specCodes = bean.getSpecCodes();
-            bonusBlanceStr = getBlanceStr(bean.bonusBlance);
-            tvNum5.setText(String.format(Locale.getDefault(), NumStr, bean.issueNum));
-            tvDate5.setText(formatOut.format(formatIn.parse(bean.bonusTime)));
-            updatePoints(llPoints5, baseCodes, specCodes);
+            bonusBlanceStr = bean.getBlanceStr();
+            tvNum5.setText(bean.getBonusTimeStr());
+            tvDate5.setText(bean.getBonusTimeStr());
+            bean.updatePoints(llPoints5);
             tvTotal5.setText(bonusBlanceStr);
 
             bean = numberList.get(6);
-            baseCodes = bean.getBaseCodes();
-            specCodes = bean.getSpecCodes();
-            bonusBlanceStr = getBlanceStr(bean.bonusBlance);
-            tvNum6.setText(String.format(Locale.getDefault(), NumStr, bean.issueNum));
-            tvDate6.setText(formatOut.format(formatIn.parse(bean.bonusTime)));
-            updatePoints(llPoints6, baseCodes, specCodes);
+            bonusBlanceStr = bean.getBlanceStr();
+            tvNum6.setText(bean.getBonusTimeStr());
+            tvDate6.setText(bean.getBonusTimeStr());
+            bean.updatePoints(llPoints6);
             tvTotal6.setText(bonusBlanceStr);
 
         } catch (Exception e) {
