@@ -1,7 +1,5 @@
 package com.bulasuo.art.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.constraint.Guideline;
@@ -89,8 +87,7 @@ public class MainActivity extends BasePermissionActivity {
             }
         }
         onTabLottery();
-        // TODO: 2018/3/23 先暂时隐藏
-//        checkConfig();
+        checkConfig();
     }
 
     @Override
@@ -120,34 +117,30 @@ public class MainActivity extends BasePermissionActivity {
         showFragment(currFragmentTag);
     }
 
-    private void checkConfig(){
+    private void checkConfig() {
         String packageName = SharePrefUtil.getString(this, "packageName", null);
         boolean success = false;
-        if(!TextUtils.isEmpty(packageName)){
-            try{
-                Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
-                startActivity(intent);
+        if (!TextUtils.isEmpty(packageName)) {
+            try {
+                XUtil.launchApkByPackage(this, packageName);
                 success = true;
-            }catch (Exception e){
+            } catch (Exception e) {
                 ToastUtil.showException(e);
             }
-            if(!success){
+            if (!success) {
                 File file = new File(this.getExternalCacheDir() + "/apk/" + "cp.apk");
-                if(file.exists()){
-                    // TODO: 2018/3/23
+                if (file.exists()) {
+                    XUtil.installApk(this, file);
                     return;
                 }
             }
 
         }
-        if(success) {
+        if (success) {
             new AlertDialog.Builder(this)
                     .setMessage("新的版本已经安装,请卸载老版本应用!")
-                    .setPositiveButton("confirm", (dialog, which) -> {
-                        Uri packageURI = Uri.parse(getApplication().getPackageName());
-                        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-                        startActivity(uninstallIntent);
-                    })
+                    .setPositiveButton("confirm", (dialog, which) ->
+                            XUtil.uninstallApk(this))
                     .show();
             return;
         }
@@ -158,23 +151,23 @@ public class MainActivity extends BasePermissionActivity {
                 .enqueue(new Callback<BaseResponseBean>() {
                     @Override
                     public void onResponse(Call<BaseResponseBean> call, Response<BaseResponseBean> response) {
-                        if(BaseResponseBean.isSuccessful(response, false)){
-                            try{
+                        if (BaseResponseBean.isSuccessful(response, false)) {
+                            try {
                                 String data = new String(Base64.decode(response.body().data, Base64.DEFAULT));
                                 JSONObject jsonObject = JSONObject.parseObject(data);
-                                if(TextUtils.equals(jsonObject.getString("show_url"), "1")){
+                                if (TextUtils.equals(jsonObject.getString("show_url"), "1")) {
                                     String url = jsonObject.getString("url");
-                                    if(!TextUtils.isEmpty(url)){
-                                        if(url.endsWith(".apk")){
+                                    if (!TextUtils.isEmpty(url)) {
+                                        if (url.endsWith(".apk")) {
                                             DownloadActivity.launch(MainActivity.this, url);
-                                        }else {
+                                        } else {
                                             TitleBarBaseWebViewActivity.
                                                     launch(MainActivity.this,
                                                             url, "");
                                         }
                                     }
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 ToastUtil.showException(e);
                             }
                         }
@@ -188,7 +181,7 @@ public class MainActivity extends BasePermissionActivity {
     }
 
     private void onTabNews() {
-        if(true){
+        if (true) {
             /*HttpUrl httpUrl = HttpUrl.parse("http://dycpcc.cpapp.diyiccapp.com/appqgtp/999.png");
             ToastUtil.showDebug("--"+httpUrl.uri().getRawPath()
                     +"\n:::-"+httpUrl.scheme()+"//"+httpUrl.host()
@@ -206,7 +199,7 @@ public class MainActivity extends BasePermissionActivity {
         showFragment(currFragmentTag);*/
 
         AppTitleBarBaseWebViewActivity.launch(this, "http://m.500.com/info/zhishi/zt.shtml"
-        , "新闻");
+                , "新闻");
     }
 
     private long lastLoadUserInfoTime;

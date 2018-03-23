@@ -52,7 +52,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtil {
     private static boolean DEBUG;
-    private static final long CONNECTION_TIMEOUT_DOWNLOAD = 30 * 60;
+    private static final long CONNECTION_TIMEOUT_DOWNLOAD = 10;
     private static final long WRITE_TIMEOUT_DOWNLOAD = 30 * 60;
     private static final long READ_TIMEOUT_DOWNLOAD = 30 * 60;
     private static final long CONNECTION_TIMEOUT = 10;

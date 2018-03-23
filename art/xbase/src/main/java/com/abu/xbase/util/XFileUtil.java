@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION;
@@ -77,7 +79,11 @@ public class XFileUtil {
             if (!f.exists()) {
                 f.mkdirs();
             }
-            imgDir = f.getAbsolutePath();
+            try {
+                imgDir = f.getCanonicalPath();
+            } catch (IOException e) {
+                ToastUtil.showException(e);
+            }
         }
         return imgDir;
     }
@@ -88,7 +94,11 @@ public class XFileUtil {
             if (!f.exists()) {
                 f.mkdirs();
             }
-            fileDir = f.getAbsolutePath();
+            try {
+                fileDir = f.getCanonicalPath();
+            } catch (IOException e) {
+                ToastUtil.showException(e);
+            }
         }
         return fileDir;
     }
@@ -99,7 +109,11 @@ public class XFileUtil {
             if (!f.exists()) {
                 f.mkdirs();
             }
-            cachImgDir = f.getAbsolutePath();
+            try {
+                cachImgDir = f.getCanonicalPath();
+            } catch (IOException e) {
+                ToastUtil.showException(e);
+            }
         }
         return cachImgDir;
     }
@@ -110,7 +124,11 @@ public class XFileUtil {
             if (!f.exists()) {
                 f.mkdirs();
             }
-            cachBrowserDir = f.getAbsolutePath();
+            try {
+                cachBrowserDir = f.getCanonicalPath();
+            } catch (IOException e) {
+                ToastUtil.showException(e);
+            }
         }
         return cachBrowserDir;
     }
@@ -121,7 +139,11 @@ public class XFileUtil {
             if (!f.exists()) {
                 f.mkdirs();
             }
-            cachCrashir = f.getAbsolutePath();
+            try {
+                cachCrashir = f.getCanonicalPath();
+            } catch (IOException e) {
+                ToastUtil.showException(e);
+            }
         }
         return cachCrashir;
     }
@@ -201,13 +223,12 @@ public class XFileUtil {
      * @return
      */
     public static Uri file2Uri(File file) {
+        if (file == null) return null;
         Uri uri = null;
-        if (file != null) {
-            try {
-                uri = FileProvider.getUriForFile(getAppContext(), SCHEME_TAG, file);
-            } catch (Exception e) {
-                ToastUtil.showException(e);
-            }
+        try {
+            uri = FileProvider.getUriForFile(getAppContext(), SCHEME_TAG, file);
+        } catch (Exception e) {
+            ToastUtil.showException(e);
         }
         return uri;
     }
@@ -219,7 +240,7 @@ public class XFileUtil {
      * @param uri
      */
     public static void grantUriPermissionRead(Intent intent, Uri uri) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
             return;
         }
         int modeFlags = FLAG_GRANT_READ_URI_PERMISSION;
@@ -233,7 +254,7 @@ public class XFileUtil {
      * @param uri
      */
     public static void grantUriPermissionWrite(Intent intent, Uri uri) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
             return;
         }
         int modeFlags = FLAG_GRANT_WRITE_URI_PERMISSION;
@@ -247,7 +268,7 @@ public class XFileUtil {
      * @param uri
      */
     public static void grantUriPermission(Intent intent, Uri uri) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
             return;
         }
         int modeFlags = FLAG_GRANT_WRITE_URI_PERMISSION
@@ -256,7 +277,7 @@ public class XFileUtil {
     }
 
     public static void grantUriPermission(Intent intent, Uri uri, @GrantUriMode int modeFlags) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT){
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
             return;
         }
         List<ResolveInfo> resInfoList = getAppContext().getPackageManager()
@@ -274,9 +295,10 @@ public class XFileUtil {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @IntDef(flag = true, value = {
             FLAG_GRANT_READ_URI_PERMISSION, FLAG_GRANT_WRITE_URI_PERMISSION,
-            FLAG_GRANT_PERSISTABLE_URI_PERMISSION, FLAG_GRANT_PREFIX_URI_PERMISSION })
+            FLAG_GRANT_PERSISTABLE_URI_PERMISSION, FLAG_GRANT_PREFIX_URI_PERMISSION})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface GrantUriMode {}
+    private @interface GrantUriMode {
+    }
 
     /**
      * @param uri 必需为权限内路径的uri 或者7.0以前的uri 比如file://开头的 但不推荐用这种uri了
@@ -286,6 +308,16 @@ public class XFileUtil {
         if (uri == null) {
             return null;
         }
+        String path = uri.toString();
+        if (path != null && path.startsWith("file:///")) {
+            try {
+                return new File(new URI(uri.toString()));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
         File file = null;
         try {
             final Object obj = XProxyUtil.invoke(getFileProvider(), "getPathStrategy",
@@ -325,11 +357,7 @@ public class XFileUtil {
     }
 
     public static void deleteFile(Uri uri) {
-        String p = uri2Path(uri);
-        if (p == null || p.trim().length() == 0) {
-            return;
-        }
-        final File file = new File(p);
+        final File file = uri2File(uri);
         if (file.exists()) {
             file.delete();
         }
@@ -357,6 +385,5 @@ public class XFileUtil {
             SystemClock.sleep(50);
         }
     }
-
 
 }

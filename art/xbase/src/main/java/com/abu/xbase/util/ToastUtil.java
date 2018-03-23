@@ -42,7 +42,7 @@ public class ToastUtil {
         try {
             System.out.println(Thread.currentThread().getId() + "-showDEBUG:::" + msg);
         } catch (Exception e) {
-            showException(e);
+            e.printStackTrace();
         }
     }
 
@@ -52,7 +52,7 @@ public class ToastUtil {
                     , msg, Toast.LENGTH_SHORT);
             toast.show();
         } catch (Exception e) {
-            showException(e);
+            e.printStackTrace();
         }
     }
 
@@ -62,7 +62,7 @@ public class ToastUtil {
                     , msg, Toast.LENGTH_LONG);
             toast.show();
         } catch (Exception e) {
-            showException(e);
+            e.printStackTrace();
         }
     }
 

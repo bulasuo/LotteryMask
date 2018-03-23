@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -519,6 +520,89 @@ public class XUtil {
             }
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * 获取apk文件的包名
+     * @param context
+     * @param apkFile
+     * @return
+     */
+    public static String getApkPackageName(Context context, File apkFile){
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo info = pm.getPackageArchiveInfo(
+                    apkFile.getCanonicalPath(),
+                    PackageManager.GET_ACTIVITIES);
+            return info.applicationInfo.packageName;
+        }catch (Exception e){
+            ToastUtil.showException(e);
+        }
+        return null;
+    }
+
+    /**
+     * 启动目标包名的应用
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public static boolean launchApkByPackage(Context context, String packageName){
+        try{
+            Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+            return true;
+        }catch (Exception e){
+            ToastUtil.showException(e);
+        }
+        return false;
+    }
+
+    /**
+     * 手动卸载context所属的应用,无需权限
+     * @param context
+     * @return
+     */
+    public static boolean uninstallApk(Context context) {
+        try {
+            Uri uri = Uri.fromParts("package",
+                    context.getApplicationContext().getPackageName(), null);
+            Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            ToastUtil.showException(e);
+        }
+        return false;
+    }
+
+    /**
+     * 手动安装应用apkFile, 无需权限
+     * @param context
+     * @param apkFile
+     * @return
+     */
+    public static boolean installApk(Context context, File apkFile) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Uri apkUri;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                apkUri = Uri.fromFile(apkFile);
+            } else {
+                apkUri = XFileUtil.file2Uri(apkFile);
+            }
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            XFileUtil.grantUriPermission(intent, apkUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            context.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            ToastUtil.showException(e);
+        }
+        return false;
     }
 
 }

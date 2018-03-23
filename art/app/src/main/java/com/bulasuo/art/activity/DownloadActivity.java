@@ -2,9 +2,6 @@ package com.bulasuo.art.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Guideline;
@@ -20,7 +17,6 @@ import com.abu.xbase.util.ImageLoaderUtils;
 import com.abu.xbase.util.SharePrefUtil;
 import com.abu.xbase.util.ThreadPool;
 import com.abu.xbase.util.ToastUtil;
-import com.abu.xbase.util.XFileUtil;
 import com.abu.xbase.util.XUtil;
 import com.abu.xbase.util.XViewUtil;
 import com.bulasuo.art.R;
@@ -178,20 +174,10 @@ public class DownloadActivity extends BaseActivity {
                 }
                 try{
                     if(success && file != null){
-                        PackageManager pm = this.getPackageManager();
-                        PackageInfo info = pm.getPackageArchiveInfo(
-                                file.getAbsolutePath(),
-                                PackageManager.GET_ACTIVITIES);
-                        String packageName = info.applicationInfo.packageName;
+                        String packageName = XUtil.getApkPackageName(this, file);
                         ToastUtil.showDebug("packageName::"+packageName);
                         SharePrefUtil.saveString(this, "packageName", packageName);
-                        // TODO: 2018/3/23
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Uri apkUri = XFileUtil.file2Uri(file);
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        XFileUtil.grantUriPermission(intent, apkUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                        XUtil.installApk(this, file);
 
                     }
                 }catch (Exception e){
