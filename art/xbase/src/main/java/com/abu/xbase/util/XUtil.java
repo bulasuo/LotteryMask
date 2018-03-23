@@ -550,7 +550,8 @@ public class XUtil {
     public static boolean launchApkByPackage(Context context, String packageName){
         try{
             Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if(!(context instanceof Activity))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
             return true;
         }catch (Exception e){
@@ -569,7 +570,8 @@ public class XUtil {
             Uri uri = Uri.fromParts("package",
                     context.getApplicationContext().getPackageName(), null);
             Intent intent = new Intent(Intent.ACTION_DELETE, uri);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if(!(context instanceof Activity))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
             return true;
         } catch (Exception e) {
@@ -587,7 +589,8 @@ public class XUtil {
     public static boolean installApk(Context context, File apkFile) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if(!(context instanceof Activity))
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Uri apkUri;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 apkUri = Uri.fromFile(apkFile);

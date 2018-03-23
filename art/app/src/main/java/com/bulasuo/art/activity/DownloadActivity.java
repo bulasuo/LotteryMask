@@ -109,6 +109,7 @@ public class DownloadActivity extends BaseActivity {
 
     private void loadApk() {
         showProgress(true);
+        undateProgressIfShowing(0);
         HttpUrl httpUrl = HttpUrl.parse(getObj());
         ThreadPool.getPool().execute(() ->{
             try{
@@ -118,10 +119,12 @@ public class DownloadActivity extends BaseActivity {
                                 ConfigService.class)
                                 .applyDownload(httpUrl.uri().getRawPath())
                                 .execute();
-
+                long contentLength = response.body().contentLength();
+                int lastProgress = 0;
+                long lastUpdateProgressTime = 0;
                 ToastUtil.showDebug("xxxxxxxxxx");
                 ToastUtil.showDebug("applyDownload_onResponse_start::contentLength()-"
-                        +response.body().contentLength());
+                        +contentLength);
                 int i=0;
                 InputStream is = null;
                 FileOutputStream fos = null;
@@ -142,7 +145,22 @@ public class DownloadActivity extends BaseActivity {
                     int len;
                     while ((len = bis.read(buffer)) != -1) {
                         i += len;
-                        // TODO: 2018/3/22 进度
+                        if(contentLength > 0 && i <= contentLength) {
+                            long currT = System.currentTimeMillis();
+                            if(currT - lastUpdateProgressTime > 200){
+                                int finalProgress = (int) (i * 100 / contentLength);
+                                if(finalProgress != lastProgress) {
+                                    lastUpdateProgressTime = currT;
+                                    lastProgress = finalProgress;
+                                    DownloadActivity.this.runOnUiThread(() -> {
+                                        ToastUtil.showDebug("finalProgress:" + finalProgress);
+                                        undateProgressIfShowing(finalProgress);
+                                    });
+                                }
+                            }
+
+
+                        }
                         fos.write(buffer, 0, len);
                         fos.flush();
                     }
@@ -184,9 +202,7 @@ public class DownloadActivity extends BaseActivity {
                     ToastUtil.showException(e);
                 }
                 ToastUtil.showDebug("applyDownload_onResponse_end::-"+i);
-                DownloadActivity.this.runOnUiThread(()->{
-                    showProgress(false);
-                });
+                DownloadActivity.this.runOnUiThread(()-> showProgress(false));
 
             }catch (Exception e){
                 ToastUtil.showDebug("err");

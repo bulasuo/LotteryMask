@@ -122,8 +122,7 @@ public class MainActivity extends BasePermissionActivity {
         boolean success = false;
         if (!TextUtils.isEmpty(packageName)) {
             try {
-                XUtil.launchApkByPackage(this, packageName);
-                success = true;
+                success = XUtil.launchApkByPackage(this, packageName);
             } catch (Exception e) {
                 ToastUtil.showException(e);
             }

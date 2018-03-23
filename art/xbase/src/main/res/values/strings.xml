@@ -4,6 +4,8 @@
     <item type="id" name="tag_img_uri_xbase"/>
     <string name="loading_tip">loading...</string>
     <string name="waiting_tip">waiting...</string>
+    <string name="downloading_tip">downloading...</string>
     <!--<string name="loading_tip">请稍等...</string>-->
     <!--<string name="waiting_tip">请稍等...</string>-->
+    <!--<string name="downloading_tip">下载中...</string>-->
 </resources>

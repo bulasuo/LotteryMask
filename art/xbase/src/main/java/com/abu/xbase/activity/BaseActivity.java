@@ -19,6 +19,7 @@ import com.abu.xbase.app.BaseApp;
 import com.abu.xbase.config.XConstant;
 import com.abu.xbase.util.ToastUtil;
 import com.abu.xbase.util.XUtil;
+import com.abu.xbase.util.XViewUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -254,9 +255,11 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
     public void showProgress(boolean show) {
         try {
             if (show) {
-                getProgressDialog().show();
+                //默认显示 waiting...提示
+                showProgress(R.string.waiting_tip);
             } else {
                 if (alertDialog != null && alertDialog.isShowing()) {
+                    mTvProgress = null;
                     alertDialog.dismiss();
                 }
             }
@@ -271,9 +274,37 @@ public abstract class BaseActivity extends BaseResumeTaskActivity {
             TextView textView = alertDialog.findViewById(R.id.tv_msg);
             if (textView != null)
                 textView.setText(msgId);
-            showProgress(true);
+            textView = alertDialog.findViewById(R.id.tv_progress);
+            if (textView != null) {
+                textView.setText(null);
+                XViewUtil.visvable(textView, View.GONE);
+            }
+            mTvProgress = null;
+            getProgressDialog().show();
         } catch (Exception e) {
             ToastUtil.showException(e);
+        }
+    }
+
+    private TextView mTvProgress;
+
+    /**
+     * @param progress {@code 1-100}
+     */
+    public void undateProgressIfShowing(int progress){
+        if(alertDialog != null && alertDialog.isShowing()) {
+            try {
+                if(progress == 0 || mTvProgress == null) {
+                    ((TextView) alertDialog.findViewById(R.id.tv_msg))
+                            .setText(R.string.downloading_tip);
+                    mTvProgress = alertDialog.findViewById(R.id.tv_progress);
+                    XViewUtil.visvable(mTvProgress, View.VISIBLE);
+                }
+                mTvProgress.setText(String.valueOf(progress).concat("%"));
+
+            } catch (Exception e) {
+                ToastUtil.showException(e);
+            }
         }
     }
 
