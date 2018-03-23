@@ -35,15 +35,15 @@ public class LotteryBean {
             winMoney,
             bonusBlance;
 
-    public String[] getBaseCodes(){
-        if(!TextUtils.isEmpty(baseCode))
+    public String[] getBaseCodes() {
+        if (!TextUtils.isEmpty(baseCode))
             return baseCode.split(",");
         else
             return new String[0];
     }
 
-    public String[] getSpecCodes(){
-        if(!TextUtils.isEmpty(specCode))
+    public String[] getSpecCodes() {
+        if (!TextUtils.isEmpty(specCode))
             return specCode.split(",");
         else
             return new String[0];
@@ -59,7 +59,7 @@ public class LotteryBean {
     private static final String BlanceFormate = "%5.2f亿";
 
     public String getBlanceStr() {
-        if(bonusBlance == null) return null;
+        if (bonusBlance == null) return null;
         float bonusBlance1 = Float.valueOf(bonusBlance) / 100000000;
         return bonusBlance1 > 1
                 ? String.format(Locale.getDefault(), BlanceFormate, bonusBlance1)
@@ -72,11 +72,11 @@ public class LotteryBean {
     private static final SimpleDateFormat formatOut =
             new SimpleDateFormat("MM-dd EEEE", Locale.getDefault());
 
-    public String getNumStr(){
+    public String getNumStr() {
         return String.format(Locale.getDefault(), NumStr, issueNum);
     }
 
-    public String getBonusTimeStr(){
+    public String getBonusTimeStr() {
         try {
             return formatOut.format(formatIn.parse(bonusTime));
         } catch (ParseException e) {
