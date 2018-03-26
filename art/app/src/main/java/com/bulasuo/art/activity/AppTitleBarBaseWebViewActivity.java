@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import com.abu.xbase.activity.BaseWebViewActivity;
 import com.abu.xbase.activity.TitleBarBaseWebViewActivity;
 import com.abu.xbase.jsbridge.BridgeWebView;
+import com.abu.xbase.util.XDisplayUtil;
 
 /**
  * @author abu
@@ -29,11 +30,12 @@ public class AppTitleBarBaseWebViewActivity extends TitleBarBaseWebViewActivity 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int heightM = XDisplayUtil.dip2px(this, 48) - 44;
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mBridgeWebView.getLayoutParams();
-        params.topMargin = 0;
+        params.topMargin = heightM;
 //        mBridgeWebView.setLayoutParams(params);
         params = (FrameLayout.LayoutParams) mTextView.getLayoutParams();
-        params.topMargin = 0;
+        params.topMargin = heightM;
 //        mTextView.setLayoutParams(params);
     }
 

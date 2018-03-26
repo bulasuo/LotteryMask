@@ -143,7 +143,9 @@ public class LotteryListActivity extends BaseActivity {
     }
 
     private void onItemClick(View v) {
-        // TODO: 2018/3/26
+        LotteryBean lotteryBean = (LotteryBean) v.getTag();
+        lotteryBean.mTitle = getObj().mTitle;
+        LotteryDetailActivity.launch(this, lotteryBean);
     }
 
     private void finishLoadMore(boolean loadMore, boolean hashMore) {

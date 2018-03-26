@@ -9,6 +9,7 @@ import com.abu.xbase.util.XUtil;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +101,9 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         if(true){
+            DecimalFormat myformat = new DecimalFormat();
+            myformat.applyPattern("##,###.00");
+            System.out.println(myformat.format(922211112345.12345));
             System.out.println(String.format(Locale.getDefault(),
                     "%s开奖走势", null));
             String xx = (String)getStr(1);

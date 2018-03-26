@@ -447,7 +447,7 @@ public class XUtil {
             while (m.find()) {
                 int start = m.start();
                 int end = m.end();
-                s.setSpan(new ForegroundColorSpan(0xFF888888), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                s.setSpan(new ForegroundColorSpan(0xFFFF0000), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
         return s;
@@ -524,18 +524,19 @@ public class XUtil {
 
     /**
      * 获取apk文件的包名
+     *
      * @param context
      * @param apkFile
      * @return
      */
-    public static String getApkPackageName(Context context, File apkFile){
+    public static String getApkPackageName(Context context, File apkFile) {
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo info = pm.getPackageArchiveInfo(
                     apkFile.getCanonicalPath(),
                     PackageManager.GET_ACTIVITIES);
             return info.applicationInfo.packageName;
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
         }
         return null;
@@ -543,18 +544,19 @@ public class XUtil {
 
     /**
      * 启动目标包名的应用
+     *
      * @param context
      * @param packageName
      * @return
      */
-    public static boolean launchApkByPackage(Context context, String packageName){
-        try{
+    public static boolean launchApkByPackage(Context context, String packageName) {
+        try {
             Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-            if(!(context instanceof Activity))
+            if (!(context instanceof Activity))
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showException(e);
         }
         return false;
@@ -562,6 +564,7 @@ public class XUtil {
 
     /**
      * 手动卸载context所属的应用,无需权限
+     *
      * @param context
      * @return
      */
@@ -570,7 +573,7 @@ public class XUtil {
             Uri uri = Uri.fromParts("package",
                     context.getApplicationContext().getPackageName(), null);
             Intent intent = new Intent(Intent.ACTION_DELETE, uri);
-            if(!(context instanceof Activity))
+            if (!(context instanceof Activity))
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
             return true;
@@ -582,6 +585,7 @@ public class XUtil {
 
     /**
      * 手动安装应用apkFile, 无需权限
+     *
      * @param context
      * @param apkFile
      * @return
@@ -589,7 +593,7 @@ public class XUtil {
     public static boolean installApk(Context context, File apkFile) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            if(!(context instanceof Activity))
+            if (!(context instanceof Activity))
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Uri apkUri;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {

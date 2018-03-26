@@ -38,6 +38,9 @@
         <activity
             android:name=".activity.LotteryListActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.LotteryDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
