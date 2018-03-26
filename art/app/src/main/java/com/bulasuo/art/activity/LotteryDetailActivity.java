@@ -8,9 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.abu.xbase.activity.BaseActivity;
+import com.abu.xbase.util.ToastUtil;
+import com.abu.xbase.util.XDisplayUtil;
 import com.abu.xbase.util.XUtil;
 import com.abu.xbase.util.XViewUtil;
 import com.bulasuo.art.R;
@@ -55,6 +58,8 @@ public class LotteryDetailActivity extends BaseActivity {
     TextView tvBonus;
     @BindView(R.id.tv_total_sale)
     TextView tvTotalSale;
+    @BindView(R.id.tab_detail)
+    TableLayout tabDetail;
 
     public static void launch(Context context, LotteryBean lotteryBean) {
         context.startActivity(new Intent(context, LotteryDetailActivity.class)
@@ -76,12 +81,7 @@ public class LotteryDetailActivity extends BaseActivity {
     }
 
     private String url = null;
-
-    private void initBar() {
-        barTvTitle.setText(String.format(Locale.getDefault(),
-                "%s开奖详情", getObj().mTitle));
-        XViewUtil.visvable(barImgLeft, View.VISIBLE);
-        barImgLeft.setOnClickListener(v -> onBackPressed());
+    private void initBarRightImg(){
         switch (getObj().mTitle) {
             case "双色球":
                 url = "http://m.500.com/datachart/ssq/jb.html";
@@ -110,6 +110,7 @@ public class LotteryDetailActivity extends BaseActivity {
         }
         if (!TextUtils.isEmpty(url)) {
             XViewUtil.visvable(barImgRight, View.VISIBLE);
+            barImgRight.setPadding(5, XDisplayUtil.dip2px(this, 15), 5, 5);
             barImgRight.setImageResource(R.drawable.ic_zoushi);
             barImgRight.setOnClickListener(v ->
                     AppTitleBarBaseWebViewActivity.launch(this, url,
@@ -118,14 +119,45 @@ public class LotteryDetailActivity extends BaseActivity {
         }
     }
 
+    private void initBar() {
+        barTvTitle.setText(String.format(Locale.getDefault(),
+                "%s开奖详情", getObj().mTitle));
+        XViewUtil.visvable(barImgLeft, View.VISIBLE);
+        barImgLeft.setOnClickListener(v -> onBackPressed());
+        initBarRightImg();
+    }
+
     private void initView() {
+        LotteryBean bean = getObj();
+        String bonusBlanceStr = bean.getBlanceStr();
+        tvNum.setText(bean.getNumStr());
+        tvDate.setText(bean.getBonusTimeStr());
+        bean.updatePoints(llPoints);
+        tvTotal.setText(bonusBlanceStr);
+        tvTitle.setText(getObj().mTitle);
+
         DecimalFormat myformat = new DecimalFormat();
         myformat.applyPattern("##,###");
-        String bonus = myformat.format(getObj().bonusBlance);
-        tvBonus.setText(XUtil.highLightString(bonus+"元", bonus));
-        String totalSale = myformat.format(getObj().saleTotal);
-        tvTotalSale.setText(XUtil.highLightString(totalSale+"元", totalSale));
-        String[] winNames =
+        String bonus = myformat.format(Double.valueOf(getObj().bonusBlance == null ? "0" : getObj().bonusBlance));
+        tvBonus.setText(XUtil.highLightString(bonus + "元", bonus));
+        String totalSale = myformat.format(Double.valueOf(getObj().saleTotal == null ? "0" : getObj().saleTotal));
+        tvTotalSale.setText(XUtil.highLightString(totalSale + "元", totalSale));
+        try {
+            String[] winNames = getObj().winName.split(",");
+            String[] winCounts = getObj().winCount.split(",");
+            String[] winMoneys = getObj().winMoney.split(",");
+
+            for (int i = 0, j = winNames.length; i < j; i++) {
+                View tableRow = getLayoutInflater().inflate(R.layout.item_tabrow_, null);
+                tabDetail.addView(tableRow);
+                ((TextView)tableRow.findViewById(R.id.tv_0)).setText(winNames[i]);
+                ((TextView)tableRow.findViewById(R.id.tv_1)).setText(winCounts[i]);
+                ((TextView)tableRow.findViewById(R.id.tv_2)).setText(myformat.format(Double.valueOf(winMoneys[i])));
+            }
+
+        } catch (Exception e) {
+            ToastUtil.showException(e);
+        }
 
     }
 

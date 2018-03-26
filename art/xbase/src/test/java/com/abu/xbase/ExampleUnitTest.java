@@ -102,8 +102,8 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         if(true){
             DecimalFormat myformat = new DecimalFormat();
-            myformat.applyPattern("##,###.00");
-            System.out.println(myformat.format(922211112345.12345));
+            myformat.applyPattern("##,###");
+            System.out.println(myformat.format(806829198));
             System.out.println(String.format(Locale.getDefault(),
                     "%s开奖走势", null));
             String xx = (String)getStr(1);

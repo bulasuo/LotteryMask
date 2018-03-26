@@ -135,6 +135,7 @@
             </RelativeLayout>
 
             <TableLayout
+                android:layout_marginTop="@dimen/mar_20"
                 android:layout_marginStart="@dimen/mar_20"
                 android:layout_marginEnd="@dimen/mar_20"
                 android:layout_width="match_parent"
@@ -194,6 +195,7 @@
             </TableLayout>
 
             <TableLayout
+                android:id="@+id/tab_detail"
                 android:layout_marginTop="@dimen/mar_20"
                 android:layout_marginStart="@dimen/mar_20"
                 android:layout_marginEnd="@dimen/mar_20"

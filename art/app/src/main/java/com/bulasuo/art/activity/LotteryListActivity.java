@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.abu.xbase.activity.BaseActivity;
 import com.abu.xbase.diffutil.BaseDiffCallBackT;
 import com.abu.xbase.retrofit.RetrofitUtil;
+import com.abu.xbase.util.XDisplayUtil;
 import com.abu.xbase.util.XViewUtil;
 import com.bulasuo.art.R;
 import com.bulasuo.art.bean.BaseResponseBeanData;
@@ -68,13 +69,51 @@ public class LotteryListActivity extends BaseActivity {
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtra(FLAG_OBJ, lotteryBean));
     }
-
+    private String url = null;
+    private void initBarRightImg(){
+        switch (getObj().mTitle) {
+            case "双色球":
+                url = "http://m.500.com/datachart/ssq/jb.html";
+                break;
+            case "福彩3D":
+                url = "http://m.500.com/datachart/sd/";
+                break;
+            case "七乐彩":
+                url = "http://m.500.com/datachart/qlc/jb.html";
+                break;
+            case "大乐透":
+                url = "http://m.500.com/datachart/dlt/jb.html";
+                break;
+            case "七星彩":
+                url = "http://m.500.com/datachart/qxc/zx/0.html";
+                break;
+            case "排列三":
+                url = "http://m.500.com/datachart/pls/jb.html";
+                break;
+            case "排列五":
+                url = "http://m.500.com/datachart/plw/zx/0.html";
+                break;
+            default:
+                url = "";
+                break;
+        }
+        if (!TextUtils.isEmpty(url)) {
+            XViewUtil.visvable(barImgRight, View.VISIBLE);
+            barImgRight.setPadding(5, XDisplayUtil.dip2px(this, 15), 5, 5);
+            barImgRight.setImageResource(R.drawable.ic_zoushi);
+            barImgRight.setOnClickListener(v ->
+                    AppTitleBarBaseWebViewActivity.launch(this, url,
+                            String.format(Locale.getDefault(),
+                                    "%s走势图", getObj().mTitle)));
+        }
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottery_list);
         initBar();
         initView();
+        initBarRightImg();
     }
 
     @Override
