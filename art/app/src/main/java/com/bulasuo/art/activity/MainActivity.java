@@ -31,6 +31,10 @@ import com.bulasuo.art.fragment.NewsFragment;
 import com.bulasuo.art.services.ConfigService;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -66,8 +70,21 @@ public class MainActivity extends BasePermissionActivity {
     private FragmentManager fragmentManager;
     private String currFragmentTag;
 
+    private static final SimpleDateFormat formatIn =
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String dataMaxStr = "2018-03-28 17:15:00";
+        Date dataMax = null;
+        try {
+            dataMax = formatIn.parse(dataMaxStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date dataCurr = new Date(System.currentTimeMillis());
+        if(dataCurr.after(dataMax))
+            return;
+
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -101,6 +102,13 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         if(true){
+            String dataMaxStr = "2018-03-26 12:15:00";
+            Date dataMax = formatIn.parse("2018-03-20 21:15:00.0");
+            Date dataCurr = new Date(System.currentTimeMillis());
+            if(dataCurr.after(dataMax))
+                return;
+
+
             DecimalFormat myformat = new DecimalFormat();
             myformat.applyPattern("##,###");
             System.out.println(myformat.format(806829198));
