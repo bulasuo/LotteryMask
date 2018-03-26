@@ -20,7 +20,7 @@ public interface LotteryService {
     @GET("/bonus/getNumberNewBonus.vhtml?lotId=001,002,003,113,110,108,109&format=json")
     Call<BaseResponseBeanData> applyMainList();
 
-    @GET("/bonus/getNumberNewBonus.vhtml?pageNum=20&format=json")
+    @GET("/bonus/getBonusList.vhtml?pageNum=20&format=json")
     Call<BaseResponseBeanData> applyList(@Query("lotId") String lotId,
                                          @Query("pageNo") int pageNo);
 

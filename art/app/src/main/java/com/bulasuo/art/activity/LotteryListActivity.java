@@ -21,6 +21,7 @@ import com.abu.xbase.util.XViewUtil;
 import com.bulasuo.art.R;
 import com.bulasuo.art.bean.BaseResponseBeanData;
 import com.bulasuo.art.bean.LotteryBean;
+import com.bulasuo.art.services.AppAPI;
 import com.bulasuo.art.services.LotteryService;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -28,6 +29,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -83,7 +85,8 @@ public class LotteryListActivity extends BaseActivity {
     private void initBar() {
         XViewUtil.visvable(barImgLeft, View.VISIBLE);
         barImgLeft.setOnClickListener(v -> onBackPressed());
-        barTvTitle.setText(getObj().mTitle);
+        barTvTitle.setText(String.format(Locale.getDefault(),
+                "%s开奖走势", getObj().mTitle));
 
     }
 
@@ -110,7 +113,8 @@ public class LotteryListActivity extends BaseActivity {
     }
 
     private void loadMore(boolean loadMore) {
-        RetrofitUtil.getService(RetrofitUtil.getGsonRetrofit(), LotteryService.class)
+        RetrofitUtil.getService(RetrofitUtil
+                .getGsonRetrofit(AppAPI.HOST_LOTTERY_MAIN_LIST), LotteryService.class)
                 .applyList(getObj().lotteryId, loadMore ? datas.size() / 20 + 1 : 1)
                 .enqueue(new Callback<BaseResponseBeanData>() {
                     @Override
@@ -187,7 +191,7 @@ public class LotteryListActivity extends BaseActivity {
             holder.tvDate.setText(bean.getBonusTimeStr());
             bean.updatePoints(holder.llPoints);
             holder.tvTotal.setText(bonusBlanceStr);
-            holder.tvTitle.setText(bean.mTitle);
+            holder.tvTitle.setText(getObj().mTitle);
         }
 
         @Override

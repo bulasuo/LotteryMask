@@ -100,6 +100,8 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         if(true){
+            System.out.println(String.format(Locale.getDefault(),
+                    "%s开奖走势", null));
             String xx = (String)getStr(1);
             System.out.println((xx == null)+ "--"+"1,".split(",").length);
             String str0 = "%5.2f";

@@ -116,6 +116,7 @@
         android:layout_height="@dimen/mar_25" />
 
     <View
+        android:layout_marginTop=""
         android:layout_below="@+id/ll_points"
         android:layout_width="match_parent"
         android:layout_height="1px"
