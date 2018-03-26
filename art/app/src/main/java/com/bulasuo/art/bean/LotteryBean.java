@@ -11,6 +11,7 @@ import com.bulasuo.art.R;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -21,8 +22,9 @@ import java.util.Locale;
  *         bulasuo@foxmail.com
  */
 
-public class LotteryBean {
+public class LotteryBean implements Serializable{
     public String
+            mTitle,
             lotteryId,
             issueNum,
             bonusTime,
@@ -34,6 +36,58 @@ public class LotteryBean {
             winCount,
             winMoney,
             bonusBlance;
+    public int
+            affirm;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LotteryBean bean = (LotteryBean) o;
+
+        if (affirm != bean.affirm) return false;
+        if (mTitle != null ? !mTitle.equals(bean.mTitle) : bean.mTitle != null) return false;
+        if (lotteryId != null ? !lotteryId.equals(bean.lotteryId) : bean.lotteryId != null)
+            return false;
+        if (issueNum != null ? !issueNum.equals(bean.issueNum) : bean.issueNum != null)
+            return false;
+        if (bonusTime != null ? !bonusTime.equals(bean.bonusTime) : bean.bonusTime != null)
+            return false;
+        if (rewardTime != null ? !rewardTime.equals(bean.rewardTime) : bean.rewardTime != null)
+            return false;
+        if (baseCode != null ? !baseCode.equals(bean.baseCode) : bean.baseCode != null)
+            return false;
+        if (specCode != null ? !specCode.equals(bean.specCode) : bean.specCode != null)
+            return false;
+        if (saleTotal != null ? !saleTotal.equals(bean.saleTotal) : bean.saleTotal != null)
+            return false;
+        if (winName != null ? !winName.equals(bean.winName) : bean.winName != null) return false;
+        if (winCount != null ? !winCount.equals(bean.winCount) : bean.winCount != null)
+            return false;
+        if (winMoney != null ? !winMoney.equals(bean.winMoney) : bean.winMoney != null)
+            return false;
+        return bonusBlance != null ? bonusBlance.equals(bean.bonusBlance) : bean.bonusBlance == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mTitle != null ? mTitle.hashCode() : 0;
+        result = 31 * result + (lotteryId != null ? lotteryId.hashCode() : 0);
+        result = 31 * result + (issueNum != null ? issueNum.hashCode() : 0);
+        result = 31 * result + (bonusTime != null ? bonusTime.hashCode() : 0);
+        result = 31 * result + (rewardTime != null ? rewardTime.hashCode() : 0);
+        result = 31 * result + (baseCode != null ? baseCode.hashCode() : 0);
+        result = 31 * result + (specCode != null ? specCode.hashCode() : 0);
+        result = 31 * result + (saleTotal != null ? saleTotal.hashCode() : 0);
+        result = 31 * result + (winName != null ? winName.hashCode() : 0);
+        result = 31 * result + (winCount != null ? winCount.hashCode() : 0);
+        result = 31 * result + (winMoney != null ? winMoney.hashCode() : 0);
+        result = 31 * result + (bonusBlance != null ? bonusBlance.hashCode() : 0);
+        result = 31 * result + affirm;
+        return result;
+    }
 
     public String[] getBaseCodes() {
         if (!TextUtils.isEmpty(baseCode))
@@ -48,10 +102,6 @@ public class LotteryBean {
         else
             return new String[0];
     }
-
-    public int
-            affirm;
-
 
     /**
      * 宽度5,小数2位,右对齐,左边不足补空格

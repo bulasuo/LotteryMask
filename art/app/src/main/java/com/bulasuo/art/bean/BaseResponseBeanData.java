@@ -14,6 +14,7 @@ import retrofit2.Response;
 
 public class BaseResponseBeanData {
     public BaseResponseBean data;
+    public String dataNum;
 
     public static boolean isSuccessful(Response<BaseResponseBeanData> response,
                                        boolean showErrInfo){

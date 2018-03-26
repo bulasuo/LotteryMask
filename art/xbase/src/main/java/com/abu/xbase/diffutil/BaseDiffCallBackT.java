@@ -16,7 +16,7 @@ import java.util.List;
 
 public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {
 
-    private List<T> mOldDatas, mNewDatas;
+    protected List<T> mOldDatas, mNewDatas;
 
     public DiffUtil.DiffResult getDiff(List<T> mOldDatas, List<T> mNewDatas, boolean detectMoves) {
         this.mOldDatas = mOldDatas;

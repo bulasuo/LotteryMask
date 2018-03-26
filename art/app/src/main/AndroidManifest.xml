@@ -35,6 +35,9 @@
         <activity
             android:name=".activity.DownloadActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.LotteryListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

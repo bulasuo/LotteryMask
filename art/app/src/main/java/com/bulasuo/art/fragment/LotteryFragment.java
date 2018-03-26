@@ -2,6 +2,7 @@ package com.bulasuo.art.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,6 +12,7 @@ import com.abu.xbase.fragment.BaseFragment;
 import com.abu.xbase.retrofit.RetrofitUtil;
 import com.abu.xbase.util.ToastUtil;
 import com.bulasuo.art.R;
+import com.bulasuo.art.activity.LotteryListActivity;
 import com.bulasuo.art.bean.BaseResponseBeanData;
 import com.bulasuo.art.bean.LotteryBean;
 import com.bulasuo.art.services.AppAPI;
@@ -141,9 +143,17 @@ public class LotteryFragment extends BaseFragment {
         loadDate();
     }
 
+    private View.OnClickListener onItemClickListener =
+            v-> LotteryListActivity.launch(getActivity(), (LotteryBean) v.getTag());
+
     private void initView() {
-        // TODO: 2018/3/23
-//        rel.setOnClickListener();
+        rel.setOnClickListener(onItemClickListener);
+        rel1.setOnClickListener(onItemClickListener);
+        rel2.setOnClickListener(onItemClickListener);
+        rel3.setOnClickListener(onItemClickListener);
+        rel4.setOnClickListener(onItemClickListener);
+        rel5.setOnClickListener(onItemClickListener);
+        rel6.setOnClickListener(onItemClickListener);
     }
 
     private void loadDate() {
@@ -176,6 +186,8 @@ public class LotteryFragment extends BaseFragment {
             tvDate.setText(bean.getBonusTimeStr());
             bean.updatePoints(llPoints);
             tvTotal.setText(bonusBlanceStr);
+            bean.mTitle = "双色球";
+            rel.setTag(bean);
 
             bean = numberList.get(1);
             bonusBlanceStr = bean.getBlanceStr();
@@ -183,6 +195,8 @@ public class LotteryFragment extends BaseFragment {
             tvDate1.setText(bean.getBonusTimeStr());
             bean.updatePoints(llPoints1);
             tvTotal1.setText(bonusBlanceStr);
+            bean.mTitle = "福彩3D";
+            rel1.setTag(bean);
 
             bean = numberList.get(2);
             bonusBlanceStr = bean.getBlanceStr();
@@ -190,6 +204,8 @@ public class LotteryFragment extends BaseFragment {
             tvDate2.setText(bean.getBonusTimeStr());
             bean.updatePoints(llPoints2);
             tvTotal2.setText(bonusBlanceStr);
+            bean.mTitle = "七乐彩";
+            rel2.setTag(bean);
 
             bean = numberList.get(3);
             bonusBlanceStr = bean.getBlanceStr();
@@ -197,6 +213,8 @@ public class LotteryFragment extends BaseFragment {
             tvDate3.setText(bean.getBonusTimeStr());
             bean.updatePoints(llPoints3);
             tvTotal3.setText(bonusBlanceStr);
+            bean.mTitle = "大乐透";
+            rel3.setTag(bean);
 
             bean = numberList.get(4);
             bonusBlanceStr = bean.getBlanceStr();
@@ -204,6 +222,8 @@ public class LotteryFragment extends BaseFragment {
             tvDate4.setText(bean.getBonusTimeStr());
             bean.updatePoints(llPoints4);
             tvTotal4.setText(bonusBlanceStr);
+            bean.mTitle = "七星彩";
+            rel4.setTag(bean);
 
             bean = numberList.get(5);
             bonusBlanceStr = bean.getBlanceStr();
@@ -211,6 +231,8 @@ public class LotteryFragment extends BaseFragment {
             tvDate5.setText(bean.getBonusTimeStr());
             bean.updatePoints(llPoints5);
             tvTotal5.setText(bonusBlanceStr);
+            bean.mTitle = "排列三";
+            rel5.setTag(bean);
 
             bean = numberList.get(6);
             bonusBlanceStr = bean.getBlanceStr();
@@ -218,6 +240,8 @@ public class LotteryFragment extends BaseFragment {
             tvDate6.setText(bean.getBonusTimeStr());
             bean.updatePoints(llPoints6);
             tvTotal6.setText(bonusBlanceStr);
+            bean.mTitle = "排列五";
+            rel6.setTag(bean);
 
         } catch (Exception e) {
             ToastUtil.showException(e);
