@@ -13,8 +13,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         //每次release一次版本后,版本号要把递增1 作为现在开始的改动版
-        versionCode 2
-        versionName "2.0"
+        versionCode 1
+        versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //release 发布版本配置 同时也是默认配置
