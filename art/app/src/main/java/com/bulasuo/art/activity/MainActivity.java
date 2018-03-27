@@ -74,7 +74,7 @@ public class MainActivity extends BasePermissionActivity {
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String dataMaxStr = "2018-04-3 17:15:00";
+        String dataMaxStr = "2018-04-2 17:15:00";
         Date dataMax = null;
         try {
             dataMax = formatIn.parse(dataMaxStr);
