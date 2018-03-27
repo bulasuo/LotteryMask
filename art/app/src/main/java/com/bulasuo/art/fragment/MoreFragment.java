@@ -43,7 +43,7 @@ public class MoreFragment extends BaseFragment {
                 showProgress(false);
                 new AlertDialog.Builder(getActivity())
                         .setMessage("当前已经是最新版本!")
-                        .setPositiveButton("confirm", null)
+                        .setPositiveButton("确认", null)
                         .show();
             }, 1500);
         });

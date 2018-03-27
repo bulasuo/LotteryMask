@@ -4,11 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.Guideline;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.abu.xbase.activity.BaseActivity;
 import com.abu.xbase.activity.BasePermissionActivity;
@@ -18,7 +15,6 @@ import com.abu.xbase.util.SharePrefUtil;
 import com.abu.xbase.util.ThreadPool;
 import com.abu.xbase.util.ToastUtil;
 import com.abu.xbase.util.XUtil;
-import com.abu.xbase.util.XViewUtil;
 import com.bulasuo.art.R;
 import com.bulasuo.art.services.ConfigService;
 
@@ -41,18 +37,6 @@ import retrofit2.Response;
  */
 
 public class DownloadActivity extends BaseActivity {
-    @BindView(R.id.view_toolbar)
-    Guideline viewToolbar;
-    @BindView(R.id.bar_img_left)
-    ImageView barImgLeft;
-    @BindView(R.id.bar_tv_left)
-    TextView barTvLeft;
-    @BindView(R.id.bar_tv_title)
-    TextView barTvTitle;
-    @BindView(R.id.bar_tv_right)
-    TextView barTvRight;
-    @BindView(R.id.bar_img_right)
-    ImageView barImgRight;
     @BindView(R.id.img_)
     ImageView img;
 
@@ -96,15 +80,9 @@ public class DownloadActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
-        initBar();
         ImageLoaderUtils.displayWithoutCache(this,
                 img, "http://dycpcc.cpapp.diyiccapp.com/appqgtp/999.png");
         loadApk();
-    }
-
-    private void initBar() {
-        XViewUtil.visvable(barImgLeft, View.VISIBLE);
-        barImgLeft.setOnClickListener(v -> onBackPressed());
     }
 
     private void loadApk() {
