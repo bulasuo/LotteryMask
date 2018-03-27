@@ -154,9 +154,14 @@ public class MainActivity extends BasePermissionActivity {
         }
         if (success) {
             new AlertDialog.Builder(this)
+                    .setCancelable(false)
                     .setMessage("新的版本已经安装,请卸载老版本应用!")
-                    .setPositiveButton("confirm", (dialog, which) ->
-                            XUtil.uninstallApk(this))
+                    .setNegativeButton("cancel", (dialog, which) -> finish())
+                    .setPositiveButton("confirm", (dialog, which) ->{
+                        XUtil.uninstallApk(this);
+                        getMainHandler().postDelayed(()->finish(), 1000);
+                    })
+
                     .show();
             return;
         }
