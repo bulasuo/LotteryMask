@@ -110,6 +110,7 @@ public class LotteryBean implements Serializable{
 
     public String getBlanceStr() {
         if (bonusBlance == null) return null;
+        bonusBlance = bonusBlance.replaceAll(",", "");
         float bonusBlance1 = Float.valueOf(bonusBlance) / 100000000;
         return bonusBlance1 > 1
                 ? String.format(Locale.getDefault(), BlanceFormate, bonusBlance1)
