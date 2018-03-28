@@ -144,7 +144,11 @@ public class LotteryFragment extends BaseFragment {
     }
 
     private View.OnClickListener onItemClickListener =
-            v-> LotteryListActivity.launch(getActivity(), (LotteryBean) v.getTag());
+            v-> {
+                if(v.getTag() == null)
+                    return;
+                LotteryListActivity.launch(getActivity(), (LotteryBean) v.getTag());
+            };
 
     private void initView() {
         rel.setOnClickListener(onItemClickListener);

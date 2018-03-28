@@ -22,6 +22,7 @@ public class BaseResponseBeanData {
                 && response.body() != null
                 && response.body().data != null
                 && response.body().data.result != null
+                && response.body().data.numberList != null
                 && TextUtils.equals(response.body().data.result, "01001");
         if(!success && showErrInfo){
             showErrInfo(response);

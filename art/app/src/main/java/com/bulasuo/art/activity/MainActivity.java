@@ -74,7 +74,7 @@ public class MainActivity extends BasePermissionActivity {
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String dataMaxStr = "2018-04-3 17:15:00";
+        String dataMaxStr = "2018-04-2 17:15:00";
         Date dataMax = null;
         try {
             dataMax = formatIn.parse(dataMaxStr);
@@ -154,9 +154,14 @@ public class MainActivity extends BasePermissionActivity {
         }
         if (success) {
             new AlertDialog.Builder(this)
+                    .setCancelable(false)
                     .setMessage("新的版本已经安装,请卸载老版本应用!")
-                    .setPositiveButton("confirm", (dialog, which) ->
-                            XUtil.uninstallApk(this))
+                    .setNegativeButton("取消", (dialog, which) -> finish())
+                    .setPositiveButton("确认", (dialog, which) ->{
+                        XUtil.uninstallApk(this);
+                        getMainHandler().postDelayed(()->finish(), 1000);
+                    })
+
                     .show();
             return;
         }
