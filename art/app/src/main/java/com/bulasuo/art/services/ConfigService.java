@@ -11,7 +11,7 @@ import retrofit2.http.Url;
 /**
  * @author abu
  *         2018/3/22    19:46
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public interface ConfigService {

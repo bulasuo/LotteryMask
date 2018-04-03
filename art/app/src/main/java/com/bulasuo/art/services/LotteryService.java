@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 /**
  * @author abu
  *         2018/3/21    16:30
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 

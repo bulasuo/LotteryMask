@@ -11,7 +11,7 @@ import android.view.WindowManager;
 /**
  * @author abu
  *         2018/2/26    16:22
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class XScreenUtil {

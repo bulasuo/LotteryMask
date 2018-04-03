@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author abu
  *         2018/1/8    14:23
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class PersistentCookieStore implements CookieStore {

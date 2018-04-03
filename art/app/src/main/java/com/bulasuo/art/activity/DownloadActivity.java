@@ -33,7 +33,7 @@ import retrofit2.Response;
 /**
  * @author abu
  *         2018/3/22    20:13
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class DownloadActivity extends BaseActivity {

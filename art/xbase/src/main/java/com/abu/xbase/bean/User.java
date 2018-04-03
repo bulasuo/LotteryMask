@@ -8,7 +8,7 @@ import org.greenrobot.greendao.annotation.Generated;
 /**
  * @author abu
  *         2018/1/2    17:02
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 @Entity

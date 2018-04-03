@@ -40,7 +40,7 @@ import retrofit2.Response;
 /**
  * @author abu
  *         2018/3/26    08:46
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class LotteryListActivity extends BaseActivity {

@@ -17,7 +17,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 /**
  * @author abu
  *         2018/1/2    11:33
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class ReflashTestActivity extends Activity {

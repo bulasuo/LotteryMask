@@ -16,7 +16,7 @@ import com.abu.xbase.util.XDisplayUtil;
 /**
  * @author abu
  *         2018/3/21    15:29
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class AppTitleBarBaseWebViewActivity extends TitleBarBaseWebViewActivity {

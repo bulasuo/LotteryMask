@@ -16,7 +16,7 @@ import java.util.HashMap;
  *
  * @author abu
  *         2017/11/22    12:51
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class BaseResumeTaskFragment extends Fragment {

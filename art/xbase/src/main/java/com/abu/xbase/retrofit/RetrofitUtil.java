@@ -47,7 +47,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * @author abu
  *         2018/1/4    19:03
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class RetrofitUtil {

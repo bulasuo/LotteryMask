@@ -14,7 +14,7 @@ import java.util.HashMap;
  *
  * @author abu
  *         2017/11/22    11:32
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public abstract class BaseResumeTaskActivity extends BaseBackPressedActivity {

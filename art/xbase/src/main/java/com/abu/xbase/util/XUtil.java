@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 /**
  * @author abu
  *         2018/1/4    14:27
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class XUtil {

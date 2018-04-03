@@ -18,7 +18,7 @@ import com.abu.xbase.R;
 /**
  * @author abu
  *         2017/11/15    23:50
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class CoreClearEditText extends android.support.v7.widget.AppCompatEditText implements

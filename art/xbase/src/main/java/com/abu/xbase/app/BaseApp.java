@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author abu
  *         2017/11/7    15:14
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public abstract class BaseApp extends Application {

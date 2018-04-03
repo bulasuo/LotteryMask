@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author abu
  *         2018/1/4    14:23
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public abstract class BaseDiffCallBackT<T> extends DiffUtil.Callback {

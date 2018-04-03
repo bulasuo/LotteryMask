@@ -3,7 +3,7 @@ package com.abu.xbase.config;
 /**
  * @author abu
  *         2017/11/14    09:54
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class XConstant {

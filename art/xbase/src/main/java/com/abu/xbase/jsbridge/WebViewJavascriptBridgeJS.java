@@ -3,7 +3,7 @@ package com.abu.xbase.jsbridge;
 /**
  * @author abu
  *         2017/11/29    19:22
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class WebViewJavascriptBridgeJS {

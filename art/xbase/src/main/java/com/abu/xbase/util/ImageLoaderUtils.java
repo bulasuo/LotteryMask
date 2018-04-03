@@ -14,7 +14,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 /**
  * @author abu
  *         2018/2/5    9:09
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class ImageLoaderUtils {

@@ -35,7 +35,7 @@ import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 /**
  * @author abu
  *         2017/11/7    18:57
- *         bulasuo@foxmail.com
+ *         ..
  */
 public class XFileUtil {
     private final static String IMG = "img";

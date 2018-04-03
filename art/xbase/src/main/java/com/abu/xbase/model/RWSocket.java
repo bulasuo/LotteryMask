@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author abu
  *         2018/2/13    09:27
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class RWSocket {

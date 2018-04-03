@@ -8,7 +8,7 @@ import android.support.v4.content.ContextCompat;
 /**
  * @author abu
  *         2017/11/22    19:17
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class BasePermissionActivity extends BaseActivity {

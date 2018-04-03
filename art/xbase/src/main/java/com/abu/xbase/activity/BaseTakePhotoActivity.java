@@ -16,7 +16,7 @@ import java.io.File;
 /**
  * @author abu
  *         2017/11/22    16:51
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public abstract class BaseTakePhotoActivity extends BasePermissionActivity {

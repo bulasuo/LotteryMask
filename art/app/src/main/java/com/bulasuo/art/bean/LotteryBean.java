@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * @author abu
  *         2018/3/21    16:15
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class LotteryBean implements Serializable{

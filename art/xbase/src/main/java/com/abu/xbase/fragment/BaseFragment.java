@@ -24,7 +24,7 @@ import retrofit2.Response;
 /**
  * @author abu
  *         2017/11/19    16:50
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public abstract class BaseFragment extends BaseResumeTaskFragment {

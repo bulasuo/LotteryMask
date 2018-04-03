@@ -37,7 +37,7 @@ import retrofit2.Response;
  *
  * @author abu
  *         2017/11/13    09:03
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public abstract class BaseActivity extends BaseResumeTaskActivity {

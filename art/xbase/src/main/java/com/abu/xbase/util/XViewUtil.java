@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * @author abu
  *         2018/3/7    14:55
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class XViewUtil {

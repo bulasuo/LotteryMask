@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference;
  * 微信开发者平台 微信支付功能的 签名是 md5 去冒号 小写
  * @author   abu
  * 2018/2/8    22:13
- * bulasuo@foxmail.com
+ * ..
  */
 public abstract class BaseWXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 

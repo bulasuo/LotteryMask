@@ -10,7 +10,7 @@ import retrofit2.Call;
 /**
  * @author abu
  *         2018/3/22    14:26
- *         bulasuo@foxmail.com
+ *         ..
  */
 @Deprecated
 public class XServiceProxyFactory implements InvocationHandler {

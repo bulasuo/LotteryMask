@@ -7,7 +7,7 @@ import android.util.DisplayMetrics;
 /**
  * @author abu
  *         2018/2/7    16:24
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class XDisplayUtil {

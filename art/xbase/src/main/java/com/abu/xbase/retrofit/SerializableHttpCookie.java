@@ -9,7 +9,7 @@ import java.net.HttpCookie;
 /**
  * @author abu
  *         2018/1/8    14:45
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class SerializableHttpCookie implements Serializable {

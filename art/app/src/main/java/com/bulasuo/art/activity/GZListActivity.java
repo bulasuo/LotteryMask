@@ -19,7 +19,7 @@ import butterknife.BindView;
 /**
  * @author abu
  *         2018/3/19    15:14
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class GZListActivity extends BaseActivity {

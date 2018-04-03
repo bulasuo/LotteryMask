@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * @author abu
  *         2018/2/26    10:59
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class SurfaceViewL extends SurfaceView implements SurfaceHolder.Callback, Runnable {

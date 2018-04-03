@@ -9,7 +9,7 @@ import com.abu.xbase.app.BaseApp;
 /**
  * @author abu
  *         2017/11/7    19:03
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 @UiThread

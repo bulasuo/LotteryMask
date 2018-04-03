@@ -14,7 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * @author abu
  *         2015/12/6    17:26
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class NetStateChangeReceiver extends BroadcastReceiver {

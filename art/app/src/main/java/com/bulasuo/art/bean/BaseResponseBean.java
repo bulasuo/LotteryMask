@@ -13,7 +13,7 @@ import retrofit2.Response;
 /**
  * @author abu
  *         2018/2/5    17:12
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class BaseResponseBean {

@@ -44,7 +44,7 @@ import java.util.Arrays;
 /**
  * @author abu
  *         2017/11/29    10:28
- *         bulasuo@foxmail.com
+ *         ..
  *         <p>
  *         ios::  https://github.com/marcuswestin/WebViewJavascriptBridge
  *         android:: https://github.com/lzyzsd/JsBridge

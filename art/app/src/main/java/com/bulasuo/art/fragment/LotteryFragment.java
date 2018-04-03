@@ -28,7 +28,7 @@ import retrofit2.Response;
 /**
  * @author abu
  *         2018/3/21    09:55
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class LotteryFragment extends BaseFragment {

@@ -8,7 +8,7 @@ import cn.jpush.android.api.JPushInterface;
 /**
  * @author abu
  *         2018/3/19    10:55
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class App extends BaseApp {

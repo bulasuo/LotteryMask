@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author abu
  *         2017/12/6    16:56
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class ThreadPool {

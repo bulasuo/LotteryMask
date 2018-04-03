@@ -27,7 +27,7 @@ import butterknife.BindView;
 /**
  * @author abu
  *         2018/3/26    16:08
- *         bulasuo@foxmail.com
+ *         ..
  */
 
 public class LotteryDetailActivity extends BaseActivity {
