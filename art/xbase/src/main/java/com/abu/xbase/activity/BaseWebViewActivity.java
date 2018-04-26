@@ -144,6 +144,10 @@ public abstract class BaseWebViewActivity extends BaseTakePhotoActivity {
         settings.setUserAgentString(RetrofitUtil.getUserAgent());
         settings.setDomStorageEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//            settings.setAllowFileAccessFromFileURLs(false);
+//        }
+//        settings.setAllowFileAccess(false);
         /**设置webview推荐使用的窗口，使html界面自适应屏幕*/
         settings.setUseWideViewPort(true);
         /**设置可以访问文件*/
