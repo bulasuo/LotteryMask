@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
 //    useLibrary 'org.apache.http.legacy'
+
+    dataBinding {
+        enabled = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

@@ -31,15 +31,15 @@ import com.bulasuo.art.fragment.NewsFragment;
 import com.bulasuo.art.services.ConfigService;
 
 import java.io.File;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+
 
 public class MainActivity extends BasePermissionActivity {
 
@@ -74,7 +74,7 @@ public class MainActivity extends BasePermissionActivity {
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String dataMaxStr = "2018-04-2 17:15:00";
+        /*String dataMaxStr = "2018-04-2 17:15:00";
         Date dataMax = null;
         try {
             dataMax = formatIn.parse(dataMaxStr);
@@ -83,7 +83,7 @@ public class MainActivity extends BasePermissionActivity {
         }
         Date dataCurr = new Date(System.currentTimeMillis());
         if(dataCurr.after(dataMax))
-            return;
+            return;*/
 
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
@@ -104,7 +104,7 @@ public class MainActivity extends BasePermissionActivity {
             }
         }
         onTabLottery();
-        checkConfig();
+//        checkConfig();
     }
 
     @Override
