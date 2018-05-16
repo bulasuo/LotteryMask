@@ -1,5 +1,6 @@
 package com.bulasuo.art.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.bulasuo.art.bean.BaseResponseBeanData;
 import com.bulasuo.art.bean.LotteryBean;
 import com.bulasuo.art.services.AppAPI;
 import com.bulasuo.art.services.LotteryService;
+import com.bulasuo.art.vm.LotteryViewModel;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -61,7 +63,8 @@ public class LotteryListActivity extends BaseActivity {
     ImageView barImgRight;
 
     private MAdapter mAdapter;
-    private ArrayList<LotteryBean> datas = new ArrayList<>();
+//    private ArrayList<LotteryBean> datas = new ArrayList<>();
+    private LotteryViewModel lotteryViewModel;
     private MDiffCallBackT<LotteryBean> mDiffCallBackT = new MDiffCallBackT<>();
 
     public static void launch(Context context, LotteryBean lotteryBean) {
@@ -111,6 +114,11 @@ public class LotteryListActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottery_list);
+//        DataBindingUtil.setContentView(this, R.layout.activity_lottery_list);
+//        setContentView(ActivityLotteryListBinding.inflate(getLayoutInflater()).getRoot());
+        lotteryViewModel = ViewModelProviders.of(this).get(LotteryViewModel.class);
+
+
         initBar();
         initView();
         initBarRightImg();
@@ -133,7 +141,7 @@ public class LotteryListActivity extends BaseActivity {
         idRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         idRecyclerview.setNestedScrollingEnabled(false);
         mAdapter = new MAdapter();
-        mAdapter.setDatas(datas);
+        mAdapter.setDatas(lotteryViewModel.getDatas());
         idRecyclerview.setAdapter(mAdapter);
 
         refreshLayout.setOnRefreshListener(refreshlayout -> loadMore(false));
@@ -154,7 +162,7 @@ public class LotteryListActivity extends BaseActivity {
     private void loadMore(boolean loadMore) {
         RetrofitUtil.getService(RetrofitUtil
                 .getGsonRetrofit(AppAPI.HOST_LOTTERY_MAIN_LIST), LotteryService.class)
-                .applyList(getObj().lotteryId, loadMore ? datas.size() / 20 + 1 : 1)
+                .applyList(getObj().lotteryId, loadMore ? lotteryViewModel.getDatas().size() / 20 + 1 : 1)
                 .enqueue(new Callback<BaseResponseBeanData>() {
                     @Override
                     public void onResponse(Call<BaseResponseBeanData> call, Response<BaseResponseBeanData> response) {
@@ -162,7 +170,7 @@ public class LotteryListActivity extends BaseActivity {
                         dealResponse(call, response);
                         if (BaseResponseBeanData.isSuccessful(response, true)) {
                             mDiffCallBackT.dispatchUpdates(loadMore, mAdapter,
-                                    datas, response.body().data.numberList, true);
+                                    lotteryViewModel.getDatas(), response.body().data.numberList, true);
 
                             finishLoadMore(loadMore, true);
                             return;
