@@ -41,6 +41,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+
 public class MainActivity extends BasePermissionActivity {
 
     @BindView(R.id.bar_img_left)
@@ -104,7 +106,7 @@ public class MainActivity extends BasePermissionActivity {
             }
         }
         onTabLottery();
-        checkConfig();
+//        checkConfig();
     }
 
     @Override
