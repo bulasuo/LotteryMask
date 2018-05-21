@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+
+static def cruTime() {
+    return new Date().format("yyyyMMdd_HHmmss", TimeZone.getTimeZone("GMT+8"))
+}
+
+task testMain(){
+    println(cruTime())
+}
+
 android {
 //    useLibrary 'org.apache.http.legacy'
 
@@ -97,9 +106,15 @@ android {
         }
     }
 
-    android.applicationVariants.all { variant ->
+    /*android.applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = APP_NAME_EN + "_${variant.productFlavors[0].name}" +
+                    "_v${variant.versionName}_${variant.buildType.name}.apk"
+        }
+    }*/
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = APP_NAME_EN + "_${variant.flavorName}" +
                     "_v${variant.versionName}_${variant.buildType.name}.apk"
         }
     }
